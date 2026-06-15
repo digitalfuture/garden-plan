@@ -460,3 +460,54 @@ body {
     left: 24px;
   }
 }
+
+/* Vintage Hover Tooltip */
+.plant-tooltip {
+  position: fixed; /* relative to viewport */
+  z-index: 9999;
+  pointer-events: none;
+  background: var(--card-bg);
+  border: 1.5px solid var(--card-border);
+  padding: 8px 12px;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-lg);
+  max-width: 240px;
+  font-family: var(--font-body);
+  font-size: 10px;
+  color: var(--text-primary);
+  opacity: 0;
+  transition: opacity 0.1s ease-out;
+}
+
+.plant-tooltip.visible {
+  opacity: 0.96;
+}
+
+.plant-tooltip.hidden {
+  display: none;
+}
+
+.plant-tooltip strong {
+  font-family: var(--font-display);
+  font-size: 11px;
+  display: block;
+  margin-bottom: 2px;
+  color: var(--text-primary);
+  border-bottom: 0.5px solid var(--ink-muted);
+  padding-bottom: 2px;
+}
+
+.plant-tooltip .bot-name {
+  font-style: italic;
+  color: var(--text-secondary);
+  font-size: 8.5px;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.plant-tooltip p {
+  font-size: 8.5px;
+  line-height: 1.25;
+  color: var(--text-secondary);
+  margin: 0;
+}

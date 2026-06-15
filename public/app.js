@@ -8,7 +8,6 @@ document.addEventListener('DOMContentLoaded', () => {
   let startPoint = { x: 0, y: 0 };
   let endPoint = { x: 0, y: 0 };
   let activeElement = null;
-  let activePlantPopup = null;
   
   // Theme Toggle
   const themeToggle = document.getElementById('theme-toggle');
@@ -166,10 +165,6 @@ document.addEventListener('DOMContentLoaded', () => {
         strokeDasharray: '4 4'
       }, 200);
       activeElement = null;
-    }
-    if (activePlantPopup) {
-      activePlantPopup.remove();
-      activePlantPopup = null;
     }
   });
 
@@ -333,11 +328,17 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  const resetBtn = document.getElementById('btn-reset');
+  if (resetBtn) {
+    resetBtn.addEventListener('click', () => {
+      animateViewBox(0, 0, imgWidth, imgHeight);
+    });
+  }
+
   // ==========================================
   // PLANTING PLAN DATA AND RENDERING
   // ==========================================
 
-  // Create groups for plant layers (Level 1 to 5)
   const plantGroups = {
     1: s.group().addClass('plant-layer plant-layer-1').attr({ opacity: 0 }),
     2: s.group().addClass('plant-layer plant-layer-2').attr({ opacity: 0 }),
@@ -346,220 +347,242 @@ document.addEventListener('DOMContentLoaded', () => {
     5: s.group().addClass('plant-layer plant-layer-5').attr({ opacity: 0 })
   };
   
-  // Disable pointer events on hidden plant layers by default
   Object.keys(plantGroups).forEach(level => {
     plantGroups[level].node.style.pointerEvents = 'none';
     interactiveGroup.add(plantGroups[level]);
   });
 
   const plantsData = {
-    // Level 4 (T): High Fruit Trees (Y: 600 to 950, X: 200 to 620)
-    'T1': { id: 'Т1', level: 4, name: 'Guava Kristal', botName: "Psidium guajava 'Kristal'", desc: 'Crispy, sweet, seedless guava variety. Medium size tree.', x: 200, y: 600, color: '#a3b18a' },
-    'T2': { id: 'Т2', level: 4, name: "Sapodilla 'Ciku Mega'", botName: 'Manilkara zapota', desc: 'Large, sweet fruit with few large seeds. Rich caramel taste.', x: 320, y: 600, color: '#ddb892' },
-    'T3': { id: 'Т3', level: 4, name: "Sapodilla 'Sawo Kecil'", botName: 'Manilkara zapota', desc: 'Highly decorative tree, sweet pear-like small fruits.', x: 440, y: 600, color: '#b7b7a4' },
-    'T4': { id: 'Т4', level: 4, name: 'Litchi', botName: 'Litchi chinensis', desc: 'Sweet Kom variety, thrives in light night coolness at 400m.', x: 560, y: 600, color: '#f28482' },
-    'T5': { id: 'Т5', level: 4, name: "Longan 'Pingpong'", botName: 'Dimocarpus longan', desc: 'Pingpong variety with large sweet fruits. Needs night cool.', x: 260, y: 750, color: '#e07a5f' },
-    'T6': { id: 'Т6', level: 4, name: 'Matoa', botName: 'Pometia pinnata', desc: 'Indonesian native, fruit tastes like rambutan, litchi and longan.', x: 380, y: 750, color: '#f4a261' },
-    'T7': { id: 'Т7', level: 4, name: 'Jaboticaba', botName: 'Plinia cauliflora', desc: 'Brazilian grape. Sweet grape-like fruits grow directly on trunk.', x: 500, y: 750, color: '#5c4d7d' },
-    'T8': { id: 'Т8', level: 4, name: "Tropical Plum 'Gondorio'", botName: "Bouea macrophylla 'Manis'", desc: 'Sweet Gondorio/Maprang. Flavor is mango-plum hybrid.', x: 620, y: 750, color: '#f4e285' },
-    'T9': { id: 'Т9', level: 4, name: "Tropical Plum 'Gondorio'", botName: "Bouea macrophylla 'Manis'", desc: 'Sweet Gondorio/Maprang. Flavor is mango-plum hybrid.', x: 200, y: 900, color: '#f4e285' },
-    'T10': { id: 'Т10', level: 4, name: 'Macadamia', botName: 'Macadamia integrifolia', desc: 'Slow growing nut tree, beautiful thornless foliage.', x: 320, y: 900, color: '#4f772d' },
-    'T11': { id: 'Т11', level: 4, name: 'Macadamia', botName: 'Macadamia integrifolia', desc: 'Slow growing nut tree, beautiful thornless foliage.', x: 440, y: 900, color: '#4f772d' },
-    'T12': { id: 'Т12', level: 4, name: 'White Sapodilla (Caimito)', botName: 'Chrysophyllum caimito', desc: 'Star apple, sweet jelly-like fruit, golden under-leaves.', x: 560, y: 900, color: '#d8f3dc' },
-
-    // Level 3 (Я3): Edible Shrubs (planted between the trees)
-    'S1': { id: 'Я3-А', level: 3, name: 'Strawberry Guava', botName: 'Psidium cattleianum', desc: 'Compact thornless bush, dark red sweet strawberry-flavored fruits.', x: 260, y: 675, color: '#d90429' },
-    'S2': { id: 'Я3-А', level: 3, name: 'Strawberry Guava', botName: 'Psidium cattleianum', desc: 'Compact thornless bush, dark red sweet strawberry-flavored fruits.', x: 500, y: 675, color: '#d90429' },
+    'T1': { id: 'Т1', level: 4, name: 'Guava Kristal', botName: "Psidium guajava 'Kristal'", desc: 'Crispy, sweet, seedless guava variety. Medium size tree.', x: 200, y: 600, color: '#a3b18a', style: 'cloud' },
+    'T2': { id: 'Т2', level: 4, name: "Sapodilla 'Ciku Mega'", botName: 'Manilkara zapota', desc: 'Large, sweet fruit with few large seeds. Rich caramel taste.', x: 320, y: 600, color: '#ddb892', style: 'pinwheel' },
+    'T3': { id: 'Т3', level: 4, name: "Sapodilla 'Sawo Kecil'", botName: 'Manilkara zapota', desc: 'Highly decorative tree, sweet pear-like small fruits.', x: 440, y: 600, color: '#b7b7a4', style: 'pinwheel' },
+    'T4': { id: 'Т4', level: 4, name: 'Litchi', botName: 'Litchi chinensis', desc: 'Sweet Kom variety, thrives in light night coolness at 400m.', x: 560, y: 600, color: '#f28482', style: 'cloud' },
+    'T5': { id: 'Т5', level: 4, name: "Longan 'Pingpong'", botName: 'Dimocarpus longan', desc: 'Pingpong variety with large sweet fruits. Needs night cool.', x: 260, y: 750, color: '#e07a5f', style: 'cloud' },
+    'T6': { id: 'Т6', level: 4, name: 'Matoa', botName: 'Pometia pinnata', desc: 'Indonesian native, fruit tastes like rambutan, litchi and longan.', x: 380, y: 750, color: '#f4a261', style: 'ring' },
+    'T7': { id: 'Т7', level: 4, name: 'Jaboticaba', botName: 'Plinia cauliflora', desc: 'Brazilian grape. Sweet grape-like fruits grow directly on trunk.', x: 500, y: 750, color: '#5c4d7d', style: 'ring' },
+    'T8': { id: 'Т8', level: 4, name: "Tropical Plum 'Gondorio'", botName: "Bouea macrophylla 'Manis'", desc: 'Sweet Gondorio/Maprang. Flavor is mango-plum hybrid.', x: 620, y: 750, color: '#f4e285', style: 'spiky' },
+    'T9': { id: 'Т9', level: 4, name: "Tropical Plum 'Gondorio'", botName: "Bouea macrophylla 'Manis'", desc: 'Sweet Gondorio/Maprang. Flavor is mango-plum hybrid.', x: 200, y: 900, color: '#f4e285', style: 'spiky' },
+    'T10': { id: 'Т10', level: 4, name: 'Macadamia', botName: 'Macadamia integrifolia', desc: 'Slow growing nut tree, beautiful thornless foliage.', x: 320, y: 900, color: '#4f772d', style: 'spiky' },
+    'T11': { id: 'Т11', level: 4, name: 'Macadamia', botName: 'Macadamia integrifolia', desc: 'Slow growing nut tree, beautiful thornless foliage.', x: 440, y: 900, color: '#4f772d', style: 'spiky' },
+    'T12': { id: 'Т12', level: 4, name: 'White Sapodilla (Caimito)', botName: 'Chrysophyllum caimito', desc: 'Star apple, sweet jelly-like fruit, golden under-leaves.', x: 560, y: 900, color: '#d8f3dc', style: 'pinwheel' },
+    'S1': { id: 'Я3-А', level: 3, name: 'Strawberry Guava', botName: 'Psidium cattleianum', desc: 'Compact thornless bush, dark red sweet strawberry fruits.', x: 260, y: 675, color: '#d90429' },
+    'S2': { id: 'Я3-А', level: 3, name: 'Strawberry Guava', botName: 'Psidium cattleianum', desc: 'Compact thornless bush, dark red sweet strawberry fruits.', x: 500, y: 675, color: '#d90429' },
     'S3': { id: 'Я3-Б', level: 3, name: 'Barbados Cherry (Sweet)', botName: 'Malpighia emarginata', desc: 'Rich in Vitamin C, selected sweet variety, tidy bush.', x: 200, y: 825, color: '#ffb703' },
     'S4': { id: 'Я3-Б', level: 3, name: 'Barbados Cherry (Sweet)', botName: 'Malpighia emarginata', desc: 'Rich in Vitamin C, selected sweet variety, tidy bush.', x: 440, y: 825, color: '#ffb703' },
     'S5': { id: 'Я3-В', level: 3, name: 'Dwarf Sweet Mulberry', botName: "Morus alba 'Dwarf'", desc: 'Grows only 1.5-2m tall, very sweet black/white berries.', x: 320, y: 825, color: '#3d348b' },
     'S6': { id: 'Я3-В', level: 3, name: 'Dwarf Sweet Mulberry', botName: "Morus alba 'Dwarf'", desc: 'Grows only 1.5-2m tall, very sweet black/white berries.', x: 560, y: 825, color: '#3d348b' },
-
-    // Level 2 (Я2): Flowers & Herbs (along the veranda/east side)
     'F1': { id: 'Я2-А', level: 2, name: 'Pentas lanceolata', botName: 'Pentas lanceolata', desc: 'Attracts butterflies, compact non-toxic bushes, blooms all year.', x: 450, y: 535, color: '#ff4d6d' },
     'F2': { id: 'Я2-Б', level: 2, name: 'Verbena bonariensis', botName: 'Verbena bonariensis', desc: 'Tall airy purple flowers, butterfly favorite.', x: 570, y: 535, color: '#b5179e' },
     'F3': { id: 'Я2-В', level: 2, name: 'Cosmos (Yellow/Pink)', botName: 'Cosmos sulphureus', desc: 'Easy self-seeding, zero-maintenance bright carpet.', x: 490, y: 570, color: '#ffb703' },
     'F4': { id: 'Я2-Г', level: 2, name: 'Zinnia elegans', botName: 'Zinnia elegans', desc: 'Bright, hypoallergenic, safe for pets.', x: 620, y: 565, color: '#ff758f' }
   };
 
-  // Render plant markers
+  // Wavy circle path for organic foliage crowns
+  function getWavyPath(cx, cy, r, waves = 10, depth = 2.5) {
+    let p = [];
+    for (let i = 0; i < waves; i++) {
+      let a1 = (i / waves) * Math.PI * 2, a2 = ((i + 1) / waves) * Math.PI * 2, am = (a1 + a2) / 2;
+      if (i === 0) p.push(`M ${cx + Math.cos(a1) * r} ${cy + Math.sin(a1) * r}`);
+      p.push(`Q ${cx + Math.cos(am) * (r - depth)} ${cy + Math.sin(am) * (r - depth)} ${cx + Math.cos(a2) * r} ${cy + Math.sin(a2) * r}`);
+    }
+    return p.join(' ') + ' Z';
+  }
+
+  // Draw architectural tree symbols
+  function drawTreeSymbol(g, cx, cy, r, color, label, style) {
+    g.add(s.circle(cx + 2, cy + 2, r).attr({ fill: 'rgba(0,0,0,0.1)' })); // shadow
+    let fillPath = style === 'cloud' ? getWavyPath(cx, cy, r, 9, 3) : null;
+    g.add(fillPath ? s.path(fillPath).attr({ fill: color, fillOpacity: 0.65 }) : s.circle(cx, cy, r).attr({ fill: color, fillOpacity: 0.65 }));
+    
+    if (style === 'cloud') {
+      g.add(s.path(fillPath).attr({ fill: 'none', stroke: 'var(--ink-color)', strokeWidth: 0.8 }));
+      for (let i = 0; i < 5; i++) {
+        let a = (i / 5) * Math.PI * 2;
+        g.add(s.line(cx, cy, cx + Math.cos(a) * (r * 0.7), cy + Math.sin(a) * (r * 0.7)).attr({ stroke: 'var(--ink-color)', strokeWidth: 0.4 }));
+      }
+    } else if (style === 'spiky') {
+      let spikes = [];
+      for (let i = 0; i < 12; i++) {
+        let a = (i / 12) * Math.PI * 2, am = ((i + 0.5) / 12) * Math.PI * 2;
+        if (i === 0) spikes.push(`M ${cx + Math.cos(a) * r} ${cy + Math.sin(a) * r}`);
+        spikes.push(`L ${cx + Math.cos(am) * (r * 0.35)} ${cy + Math.sin(am) * (r * 0.35)} L ${cx + Math.cos(a) * r} ${cy + Math.sin(a) * r}`);
+      }
+      g.add(s.path(spikes.join(' ') + ' Z').attr({ fill: 'none', stroke: 'var(--ink-color)', strokeWidth: 0.7 }));
+    } else if (style === 'pinwheel') {
+      g.add(s.circle(cx, cy, r).attr({ fill: 'none', stroke: 'var(--ink-color)', strokeWidth: 0.8 }));
+      for (let i = 0; i < 10; i++) {
+        let a = (i / 10) * Math.PI * 2;
+        g.add(s.line(cx + Math.cos(a) * (r * 0.25), cy + Math.sin(a) * (r * 0.25), cx + Math.cos(a) * r, cy + Math.sin(a) * r).attr({ stroke: 'var(--ink-color)', strokeWidth: 0.4 }));
+      }
+      g.add(s.circle(cx, cy, r * 0.25).attr({ fill: 'none', stroke: 'var(--ink-color)', strokeWidth: 0.4 }));
+    } else { // ring
+      g.add(s.circle(cx, cy, r).attr({ fill: 'none', stroke: 'var(--ink-color)', strokeWidth: 0.8 }));
+      g.add(s.circle(cx, cy, r * 0.72).attr({ fill: 'none', stroke: 'var(--ink-color)', strokeWidth: 0.5, strokeDasharray: '2 1.5' }));
+      g.add(s.circle(cx, cy, r * 0.44).attr({ fill: 'none', stroke: 'var(--ink-color)', strokeWidth: 0.4 }));
+      g.add(s.line(cx - r, cy, cx + r, cy).attr({ stroke: 'var(--ink-color)', strokeWidth: 0.3 }));
+      g.add(s.line(cx, cy - r, cx, cy + r).attr({ stroke: 'var(--ink-color)', strokeWidth: 0.3 }));
+    }
+    
+    // Label Medallion
+    g.add(s.circle(cx, cy, 7.5).attr({ fill: 'var(--card-bg)', stroke: 'var(--ink-color)', strokeWidth: 0.5 }));
+    g.add(s.text(cx, cy + 2.5, label).attr({
+      fontFamily: 'var(--font-display)',
+      fontSize: '8px',
+      fontWeight: '700',
+      textAnchor: 'middle',
+      fill: 'var(--ink-color)'
+    }));
+  }
+
+  // Tooltip DOM and event handlers
+  const tooltip = document.getElementById('plant-tooltip');
+
+  function showTooltip(e, plant) {
+    if (!tooltip) return;
+    tooltip.innerHTML = `
+      <strong>${plant.id}. ${plant.name}</strong>
+      <span class="bot-name">${plant.botName}</span>
+      <p>${plant.desc}</p>
+    `;
+    tooltip.classList.remove('hidden');
+    tooltip.offsetWidth; // Force layout reflow
+    tooltip.classList.add('visible');
+    positionTooltip(e);
+  }
+
+  function positionTooltip(e) {
+    if (!tooltip) return;
+    const offset = 15;
+    const x = e.clientX + offset;
+    const y = e.clientY + offset;
+    const tw = tooltip.offsetWidth;
+    const th = tooltip.offsetHeight;
+    const vw = window.innerWidth;
+    const vh = window.innerHeight;
+    
+    let cx = x + tw > vw ? e.clientX - tw - offset : x;
+    let cy = y + th > vh ? e.clientY - th - offset : y;
+    
+    tooltip.style.left = `${cx}px`;
+    tooltip.style.top = `${cy}px`;
+  }
+
+  function hideTooltip() {
+    if (tooltip) {
+      tooltip.classList.remove('visible');
+      tooltip.classList.add('hidden');
+    }
+  }
+
+  // Render All Plants
   Object.keys(plantsData).forEach(key => {
     const plant = plantsData[key];
     const group = plantGroups[plant.level];
     
     if (plant.level === 4) {
-      // Draw Tree Marker
       const g = s.group().addClass('plant-marker tree-marker').attr({ id: `marker-${key}` });
-      g.add(s.circle(plant.x + 2, plant.y + 2, 18).attr({ fill: 'rgba(0,0,0,0.12)' })); // Shadow
-      g.add(s.circle(plant.x, plant.y, 18).attr({ fill: plant.color, fillOpacity: 0.65 })); // Watercolor fill
-      g.add(s.circle(plant.x, plant.y, 18).attr({ fill: 'none', stroke: 'var(--ink-color)', strokeWidth: 1 })); // Outer border
-      g.add(s.circle(plant.x, plant.y, 15).attr({ fill: 'none', stroke: 'var(--ink-color)', strokeWidth: 0.5, strokeDasharray: '2 2' })); // Inner ring
-      g.add(s.circle(plant.x, plant.y, 1.5).attr({ fill: 'var(--ink-color)' })); // Trunk dot
-      g.add(s.text(plant.x, plant.y + 3.5, plant.id).attr({
-        fontFamily: 'var(--font-display)',
-        fontSize: '9px',
-        fontWeight: '700',
-        textAnchor: 'middle',
-        fill: 'var(--ink-color)'
-      }));
-      
-      g.click((e) => {
-        e.stopPropagation();
-        showPlantPopup(plant, g);
-      });
+      drawTreeSymbol(g, plant.x, plant.y, 18, plant.color, plant.id, plant.style);
+      g.mouseover((e) => showTooltip(e, plant));
+      g.mousemove((e) => positionTooltip(e));
+      g.mouseout(() => hideTooltip());
       group.add(g);
     } else if (plant.level === 3) {
-      // Draw Shrub Marker
       const g = s.group().addClass('plant-marker shrub-marker').attr({ id: `marker-${key}` });
-      g.add(s.circle(plant.x + 1.5, plant.y + 1.5, 12).attr({ fill: 'rgba(0,0,0,0.1)' }));
-      g.add(s.circle(plant.x, plant.y, 12).attr({ fill: plant.color, fillOpacity: 0.6 }));
-      g.add(s.circle(plant.x, plant.y, 12).attr({ fill: 'none', stroke: 'var(--ink-color)', strokeWidth: 0.75, strokeDasharray: '3 1.5' }));
-      g.add(s.text(plant.x, plant.y + 3, plant.id).attr({
-        fontFamily: 'var(--font-display)',
-        fontSize: '7px',
-        fontWeight: '600',
-        textAnchor: 'middle',
-        fill: 'var(--ink-color)'
+      g.add(s.path(getWavyPath(plant.x + 1.5, plant.y + 1.5, 12, 8, 2)).attr({ fill: 'rgba(0,0,0,0.1)' }));
+      g.add(s.path(getWavyPath(plant.x, plant.y, 12, 8, 2)).attr({ fill: plant.color, fillOpacity: 0.65 }));
+      g.add(s.path(getWavyPath(plant.x, plant.y, 12, 8, 2)).attr({ fill: 'none', stroke: 'var(--ink-color)', strokeWidth: 0.75 }));
+      g.add(s.circle(plant.x, plant.y, 5).attr({ fill: 'var(--card-bg)', stroke: 'var(--ink-color)', strokeWidth: 0.4 }));
+      g.add(s.text(plant.x, plant.y + 1.8, plant.id).attr({
+        fontFamily: 'var(--font-display)', fontSize: '5.5px', fontWeight: '600', textAnchor: 'middle', fill: 'var(--ink-color)'
       }));
-      
-      g.click((e) => {
-        e.stopPropagation();
-        showPlantPopup(plant, g);
-      });
+      g.mouseover((e) => showTooltip(e, plant));
+      g.mousemove((e) => positionTooltip(e));
+      g.mouseout(() => hideTooltip());
       group.add(g);
     } else if (plant.level === 2) {
-      // Draw Flower Marker (Cluster of circles)
       const g = s.group().addClass('plant-marker flower-marker').attr({ id: `marker-${key}` });
       g.add(s.circle(plant.x - 3.5, plant.y - 2, 7).attr({ fill: plant.color, fillOpacity: 0.7, stroke: 'var(--ink-color)', strokeWidth: 0.5 }));
       g.add(s.circle(plant.x + 3.5, plant.y - 1, 6).attr({ fill: plant.color, fillOpacity: 0.7, stroke: 'var(--ink-color)', strokeWidth: 0.5 }));
       g.add(s.circle(plant.x, plant.y + 3.5, 6.5).attr({ fill: plant.color, fillOpacity: 0.7, stroke: 'var(--ink-color)', strokeWidth: 0.5 }));
+      g.add(s.circle(plant.x, plant.y, 5).attr({ fill: 'var(--card-bg)', stroke: 'var(--ink-color)', strokeWidth: 0.4 }));
       g.add(s.text(plant.x, plant.y + 2, plant.id).attr({
-        fontFamily: 'var(--font-display)',
-        fontSize: '6.5px',
-        fontWeight: '700',
-        textAnchor: 'middle',
-        fill: 'var(--ink-color)'
+        fontFamily: 'var(--font-display)', fontSize: '5.5px', fontWeight: '700', textAnchor: 'middle', fill: 'var(--ink-color)'
       }));
-      
-      g.click((e) => {
-        e.stopPropagation();
-        showPlantPopup(plant, g);
-      });
+      g.mouseover((e) => showTooltip(e, plant));
+      g.mousemove((e) => positionTooltip(e));
+      g.mouseout(() => hideTooltip());
       group.add(g);
     }
   });
 
-  // Draw Level 5: Vertical Vines (Lianas along East & West fences)
-  // West Fence Lianas (X=150, Isabella grape, Jupiter, Passionfruit)
+  // West Fence Lianas (X=150)
   const westVinePath = [];
   for (let y = 205; y <= 1095; y += 10) {
-    const dx = Math.sin(y / 15) * 5;
-    westVinePath.push(`${y === 205 ? 'M' : 'L'} ${150 + dx} ${y}`);
+    westVinePath.push(`${y === 205 ? 'M' : 'L'} ${150 + Math.sin(y / 15) * 5} ${y}`);
   }
   const westVine = s.path(westVinePath.join(' ')).attr({
-    fill: 'none',
-    stroke: '#5e7054',
-    strokeWidth: 1.5,
-    strokeLinecap: 'round',
-    cursor: 'pointer'
+    fill: 'none', stroke: '#5e7054', strokeWidth: 1.5, strokeLinecap: 'round', cursor: 'pointer'
   });
   plantGroups[5].add(westVine);
   
   const westVineData = {
-    id: 'Л-Запад',
-    name: 'West Fence Vines',
-    botName: 'Passiflora & Vitis vinifera',
-    desc: 'Markisa Madu (sweet honey passionfruit) and seedless grapes (Isabella, Jupiter, Ninel) climbing the sunny afternoon fence.',
-    x: 155,
-    y: 500
+    id: 'Л-Запад', name: 'West Fence Vines', botName: 'Passiflora & Vitis vinifera',
+    desc: 'Markisa Madu (sweet honey passionfruit) and seedless grapes (Isabella, Jupiter, Ninel) climbing the western fence.'
   };
-  westVine.click((e) => {
-    e.stopPropagation();
-    showPlantPopup(westVineData, westVine);
-  });
+  westVine.mouseover((e) => showTooltip(e, westVineData));
+  westVine.mousemove((e) => positionTooltip(e));
+  westVine.mouseout(() => hideTooltip());
   
   for (let y = 210; y <= 1090; y += 20) {
-    const dx = Math.sin(y / 15) * 5;
-    const leaf = s.circle(150 + dx + (y % 40 === 0 ? 3 : -3), y, 3).attr({
-      fill: y % 40 === 0 ? '#778c6e' : '#5e7054',
-      stroke: 'var(--ink-color)',
-      strokeWidth: 0.3
+    const leaf = s.circle(150 + Math.sin(y / 15) * 5 + (y % 40 === 0 ? 3 : -3), y, 3).attr({
+      fill: y % 40 === 0 ? '#778c6e' : '#5e7054', stroke: 'var(--ink-color)', strokeWidth: 0.3
     });
     plantGroups[5].add(leaf);
   }
 
-  // East Fence Dragonfruit (X=690, Y: 500 to 1100)
+  // East Fence Dragonfruit (X=690)
   const eastVinePath = [];
   for (let y = 505; y <= 1095; y += 12) {
-    const dx = Math.sin(y / 12) * 4;
-    eastVinePath.push(`${y === 505 ? 'M' : 'L'} ${690 - dx} ${y}`);
+    eastVinePath.push(`${y === 505 ? 'M' : 'L'} ${690 - Math.sin(y / 12) * 4} ${y}`);
   }
   const eastVine = s.path(eastVinePath.join(' ')).attr({
-    fill: 'none',
-    stroke: '#778c6e',
-    strokeWidth: 1.5,
-    strokeLinecap: 'round',
-    cursor: 'pointer'
+    fill: 'none', stroke: '#778c6e', strokeWidth: 1.5, strokeLinecap: 'round', cursor: 'pointer'
   });
   plantGroups[5].add(eastVine);
   
   const eastVineData = {
-    id: 'Л-Восток',
-    name: 'East Fence Dragonfruit',
-    botName: 'Selenicereus undatus',
-    desc: 'Three varieties of pitahaya (White, Red, and sweet Yellow) growing on simple supports along the eastern fence.',
-    x: 685,
-    y: 750
+    id: 'Л-Восток', name: 'East Dragonfruit', botName: 'Selenicereus undatus',
+    desc: 'Three varieties of pitahaya (White, Red, and sweet Yellow) growing on supports along the eastern fence.'
   };
-  eastVine.click((e) => {
-    e.stopPropagation();
-    showPlantPopup(eastVineData, eastVine);
-  });
+  eastVine.mouseover((e) => showTooltip(e, eastVineData));
+  eastVine.mousemove((e) => positionTooltip(e));
+  eastVine.mouseout(() => hideTooltip());
   
   for (let y = 515; y <= 1085; y += 24) {
-    const dx = Math.sin(y / 12) * 4;
-    const leaf = s.circle(690 - dx + (y % 48 === 0 ? -3 : 3), y, 3.5).attr({
-      fill: y % 48 === 0 ? '#98a886' : '#778c6e',
-      stroke: 'var(--ink-color)',
-      strokeWidth: 0.3
+    const leaf = s.circle(690 - Math.sin(y / 12) * 4 + (y % 48 === 0 ? -3 : 3), y, 3.5).attr({
+      fill: y % 48 === 0 ? '#98a886' : '#778c6e', stroke: 'var(--ink-color)', strokeWidth: 0.3
     });
     plantGroups[5].add(leaf);
   }
 
   // Draw Level 1: Living Carpet / Grasses
-  // Mint in the cutout
   const mintZone = s.polygon([335, 415, 415, 415, 415, 495, 335, 495]).attr({
-    fill: '#a3b18a',
-    fillOpacity: 0.35,
-    stroke: '#5e7054',
-    strokeWidth: 1,
-    strokeDasharray: '3 3',
-    cursor: 'pointer'
+    fill: '#a3b18a', fillOpacity: 0.35, stroke: '#5e7054', strokeWidth: 1, strokeDasharray: '3 3', cursor: 'pointer'
   });
   const mintLabel = s.text(375, 460, 'Wild Mint').attr({
-    fontFamily: 'var(--font-body)',
-    fontSize: '9px',
-    fontStyle: 'italic',
-    textAnchor: 'middle',
-    fill: 'var(--ink-muted)'
+    fontFamily: 'var(--font-body)', fontSize: '9px', fontStyle: 'italic', textAnchor: 'middle', fill: 'var(--ink-muted)'
   });
   const mintGroup = s.group(mintZone, mintLabel);
   plantGroups[1].add(mintGroup);
   
   const mintData = {
-    id: 'Я1-В',
-    name: 'Wild Mint (Mentha)',
-    botName: 'Mentha arvensis / javanica',
-    desc: 'Planted in the cool semi-shade of the house cutout. Repels pests, smells pleasant, and attracts butterflies.',
-    x: 375,
-    y: 475
+    id: 'Я1-В', name: 'Wild Mint (Mentha)', botName: 'Mentha arvensis / javanica',
+    desc: 'Planted in the cool semi-shade of the house cutout. Repels pests, smells pleasant, and attracts butterflies.'
   };
-  mintGroup.click((e) => {
-    e.stopPropagation();
-    showPlantPopup(mintData, mintGroup);
-  });
+  mintGroup.mouseover((e) => showTooltip(e, mintData));
+  mintGroup.mousemove((e) => positionTooltip(e));
+  mintGroup.mouseout(() => hideTooltip());
 
-  // Grass tuft icons scattered in the garden to represent Arachis pintoi and Lippia node
   const groundcoverPositions = [
     { x: 200, y: 350, type: 'lippia', name: 'Phyla nodiflora (Lippia)', id: 'Я1-Б', desc: 'Groundcover substitute for lawn, handles light traffic. White-pink flowers attract butterflies.', color: '#f28482' },
     { x: 280, y: 300, type: 'arachis', name: 'Arachis pintoi (Kacang-kacangan)', id: 'Я1-А', desc: 'Creeping wild peanut. Fixes nitrogen, has beautiful yellow flowers, chokes weeds. No mowing needed.', color: '#ffb703' },
@@ -577,124 +600,11 @@ document.addEventListener('DOMContentLoaded', () => {
     gcGroup.add(s.circle(gc.x - 6, gc.y - 8, 1.5).attr({ fill: gc.color }));
     gcGroup.add(s.circle(gc.x + 6, gc.y - 8, 1.5).attr({ fill: gc.color }));
     
-    gcGroup.click((e) => {
-      e.stopPropagation();
-      showPlantPopup(gc, gcGroup);
-    });
+    gcGroup.mouseover((e) => showTooltip(e, gc));
+    gcGroup.mousemove((e) => positionTooltip(e));
+    gcGroup.mouseout(() => hideTooltip());
     plantGroups[1].add(gcGroup);
   });
-
-  // Helper function to draw wrapped text inside SVG popups
-  function drawWrappedText(svgGroup, textStr, x, y, width, fontSize, fontStyle) {
-    const words = textStr.split(' ');
-    let line = '';
-    let currentY = y;
-    const maxChars = Math.floor(width / (fontSize * 0.55));
-    
-    words.forEach(word => {
-      const testLine = line + word + ' ';
-      if (testLine.length > maxChars) {
-        svgGroup.add(s.text(x, currentY, line.trim()).attr({
-          fontFamily: 'var(--font-body)',
-          fontSize: `${fontSize}px`,
-          fontStyle: fontStyle || 'normal',
-          fill: 'var(--text-secondary)'
-        }));
-        line = word + ' ';
-        currentY += fontSize + 2;
-      } else {
-        line = testLine;
-      }
-    });
-    if (line) {
-      svgGroup.add(s.text(x, currentY, line.trim()).attr({
-        fontFamily: 'var(--font-body)',
-        fontSize: `${fontSize}px`,
-        fontStyle: fontStyle || 'normal',
-        fill: 'var(--text-secondary)'
-      }));
-    }
-  }
-
-  // Show plant popup card
-  function showPlantPopup(plant, markerG) {
-    if (activePlantPopup) {
-      activePlantPopup.remove();
-    }
-
-    const popupG = s.group().addClass('plant-popup');
-    
-    const w = 220;
-    const h = 100;
-    const px = plant.x - w / 2;
-    const py = plant.y - h - 20;
-    
-    const rect = s.rect(px, py, w, h, 4).attr({
-      fill: 'var(--card-bg)',
-      stroke: 'var(--card-border)',
-      strokeWidth: 1.5
-    });
-    
-    const triangle = s.polygon([
-      plant.x - 8, py + h,
-      plant.x + 8, py + h,
-      plant.x, plant.y - 5
-    ]).attr({
-      fill: 'var(--card-bg)',
-      stroke: 'var(--card-border)',
-      strokeWidth: 0
-    });
-    
-    const triangleBorder = s.polyline([
-      plant.x - 8, py + h,
-      plant.x, plant.y - 5,
-      plant.x + 8, py + h
-    ]).attr({
-      fill: 'none',
-      stroke: 'var(--card-border)',
-      strokeWidth: 1.5
-    });
-    
-    popupG.add(rect, triangle, triangleBorder);
-    
-    const closeBtn = s.text(px + w - 14, py + 15, '×').attr({
-      fontFamily: 'var(--font-display)',
-      fontSize: '16px',
-      fontWeight: 'bold',
-      fill: 'var(--text-secondary)',
-      cursor: 'pointer'
-    });
-    closeBtn.click((e) => {
-      e.stopPropagation();
-      popupG.remove();
-      activePlantPopup = null;
-    });
-    popupG.add(closeBtn);
-    
-    const titleText = s.text(px + 12, py + 22, `${plant.id}. ${plant.name}`).attr({
-      fontFamily: 'var(--font-display)',
-      fontSize: '11px',
-      fontWeight: '700',
-      fill: 'var(--text-primary)'
-    });
-    
-    const botText = s.text(px + 12, py + 34, plant.botName).attr({
-      fontFamily: 'var(--font-body)',
-      fontSize: '9px',
-      fontStyle: 'italic',
-      fill: 'var(--text-muted)'
-    });
-    
-    popupG.add(titleText, botText);
-    
-    drawWrappedText(popupG, plant.desc, px + 12, py + 48, w - 24, 8);
-    
-    interactiveGroup.add(popupG);
-    activePlantPopup = popupG;
-    
-    // Pan slightly to center on the popup
-    animateViewBox(plant.x - viewBox.w / 2, plant.y - viewBox.h / 2 - 50, viewBox.w, viewBox.h);
-  }
 
   // Switch tabs in the Legend
   const tabZones = document.getElementById('tab-zones');
@@ -709,26 +619,17 @@ document.addEventListener('DOMContentLoaded', () => {
       panelZones.classList.remove('hidden');
       panelPlants.classList.add('hidden');
       
-      // Restore zone outlines and fills
       Object.keys(polygonElements).forEach(id => {
-        polygonElements[id].animate({
-          fillOpacity: 0.15,
-          strokeWidth: 2
-        }, 300);
+        polygonElements[id].animate({ fillOpacity: 0.15, strokeWidth: 2 }, 300);
         polygonElements[id].node.style.pointerEvents = 'auto';
       });
       
-      // Hide plant layers
       Object.keys(plantGroups).forEach(level => {
         plantGroups[level].animate({ opacity: 0 }, 300, null, () => {
           plantGroups[level].node.style.pointerEvents = 'none';
         });
       });
-      
-      if (activePlantPopup) {
-        activePlantPopup.remove();
-        activePlantPopup = null;
-      }
+      hideTooltip();
     });
 
     tabPlants.addEventListener('click', () => {
@@ -737,12 +638,8 @@ document.addEventListener('DOMContentLoaded', () => {
       panelPlants.classList.remove('hidden');
       panelZones.classList.add('hidden');
       
-      // Dim zone backgrounds
       Object.keys(polygonElements).forEach(id => {
-        polygonElements[id].animate({
-          fillOpacity: 0.02,
-          strokeWidth: 0.5
-        }, 300);
+        polygonElements[id].animate({ fillOpacity: 0.02, strokeWidth: 0.5 }, 300);
         polygonElements[id].node.style.pointerEvents = 'none';
       });
       if (activeElement) {
@@ -750,7 +647,6 @@ document.addEventListener('DOMContentLoaded', () => {
         activeElement = null;
       }
       
-      // Show plant layers that are checked
       Object.keys(plantGroups).forEach(level => {
         const checkbox = document.getElementById(`toggle-l${level}`);
         if (checkbox && checkbox.checked) {
@@ -771,10 +667,7 @@ document.addEventListener('DOMContentLoaded', () => {
         plantGroups[i].animate({ opacity: visible ? 1 : 0 }, 200, null, () => {
           plantGroups[i].node.style.pointerEvents = visible ? 'auto' : 'none';
         });
-        if (!checkbox.checked && activePlantPopup) {
-          activePlantPopup.remove();
-          activePlantPopup = null;
-        }
+        hideTooltip();
       });
     }
   }
