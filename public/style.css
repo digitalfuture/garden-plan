@@ -153,6 +153,29 @@ body {
   margin: 0 4px;
 }
 
+/* Floating Title in the Top-Left */
+.map-title-floating {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  z-index: 10;
+  pointer-events: none; /* Let click events pass to SVG canvas */
+}
+
+.map-title-floating h1 {
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  color: var(--text-primary);
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  padding: 8px 16px;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-lg);
+  display: inline-block;
+}
+
 /* Floating Legend on the Left */
 .plan-legend-floating {
   position: absolute;
