@@ -37,17 +37,17 @@ document.addEventListener('DOMContentLoaded', () => {
     'main-house': {
       title: 'Main House (HOUSE)',
       category: 'residential',
-      points: [420, 380, 560, 380, 560, 1100, 420, 1100]
+      points: [420, 650, 690, 650, 690, 950, 420, 950]
     },
     'parking': {
       title: 'Parking Area (PARKING)',
       category: 'utility',
-      points: [560, 500, 680, 500, 680, 1100, 560, 1100]
+      points: [420, 950, 690, 950, 690, 1100, 420, 1100]
     },
     'garden': {
       title: 'Free Territory / Garden',
       category: 'garden',
-      points: [150, 200, 690, 200, 690, 500, 560, 500, 560, 380, 420, 380, 420, 1100, 150, 1100]
+      points: [150, 200, 690, 200, 690, 650, 420, 650, 420, 1100, 150, 1100]
     }
   };
 
