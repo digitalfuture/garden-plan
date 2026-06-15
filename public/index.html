@@ -46,41 +46,94 @@
 
         <!-- Vintage Floating Legend on the Left -->
         <div class="plan-legend-floating">
+          <!-- Tabs to switch between Zones and Plant Levels -->
+          <div class="legend-tabs">
+            <button id="tab-zones" class="legend-tab active">ZONES</button>
+            <button id="tab-plants" class="legend-tab">PLANTING</button>
+          </div>
+          
           <div class="legend-items">
-            <div class="legend-item" data-target="main-house">
-              <div class="legend-color-wrapper">
-                <span class="legend-color residential"></span>
+            <!-- Zones Panel -->
+            <div id="panel-zones" class="legend-panel">
+              <div class="legend-item" data-target="main-house">
+                <div class="legend-color-wrapper">
+                  <span class="legend-color residential"></span>
+                </div>
+                <div class="legend-text">
+                  <strong>Residential (HOUSE)</strong>
+                  <span>Main House Area • 60 m²</span>
+                </div>
               </div>
-              <div class="legend-text">
-                <strong>Residential (HOUSE)</strong>
-                <span>Main House Area • 60 m²</span>
+              <div class="legend-item" data-target="veranda">
+                <div class="legend-color-wrapper">
+                  <span class="legend-color veranda"></span>
+                </div>
+                <div class="legend-text">
+                  <strong>Veranda (TERRACE)</strong>
+                  <span>Wooden Veranda • 30 m²</span>
+                </div>
+              </div>
+              <div class="legend-item" data-target="garden">
+                <div class="legend-color-wrapper">
+                  <span class="legend-color garden"></span>
+                </div>
+                <div class="legend-text">
+                  <strong>Garden & Greenery</strong>
+                  <span>Open Landscaping • 477 m²</span>
+                </div>
+              </div>
+              <div class="legend-item" data-target="parking">
+                <div class="legend-color-wrapper">
+                  <span class="legend-color utility"></span>
+                </div>
+                <div class="legend-text">
+                  <strong>Utility (PARKING)</strong>
+                  <span>Parking Space • 33 m²</span>
+                </div>
               </div>
             </div>
-            <div class="legend-item" data-target="veranda">
-              <div class="legend-color-wrapper">
-                <span class="legend-color veranda"></span>
+
+            <!-- Plants Panel (hidden by default) -->
+            <div id="panel-plants" class="legend-panel hidden">
+              <div class="plant-level-selector" data-level="1">
+                <span class="level-badge">Я1</span>
+                <div class="level-info">
+                  <strong>Living Carpet</strong>
+                  <span>Grass & groundcover</span>
+                </div>
+                <input type="checkbox" checked class="level-toggle" id="toggle-l1">
               </div>
-              <div class="legend-text">
-                <strong>Veranda (TERRACE)</strong>
-                <span>Wooden Veranda • 30 m²</span>
+              <div class="plant-level-selector" data-level="2">
+                <span class="level-badge">Я2</span>
+                <div class="level-info">
+                  <strong>Flowers & Herbs</strong>
+                  <span>Butterfly magnets</span>
+                </div>
+                <input type="checkbox" checked class="level-toggle" id="toggle-l2">
               </div>
-            </div>
-            <div class="legend-item" data-target="garden">
-              <div class="legend-color-wrapper">
-                <span class="legend-color garden"></span>
+              <div class="plant-level-selector" data-level="3">
+                <span class="level-badge">Я3</span>
+                <div class="level-info">
+                  <strong>Edible Shrubs</strong>
+                  <span>Compact sweet berries</span>
+                </div>
+                <input type="checkbox" checked class="level-toggle" id="toggle-l3">
               </div>
-              <div class="legend-text">
-                <strong>Garden & Greenery</strong>
-                <span>Open Landscaping • 477 m²</span>
+              <div class="plant-level-selector" data-level="4">
+                <span class="level-badge">Т</span>
+                <div class="level-info">
+                  <strong>Fruit Trees</strong>
+                  <span>12 canopy trees (South)</span>
+                </div>
+                <input type="checkbox" checked class="level-toggle" id="toggle-l4">
               </div>
-            </div>
-            <div class="legend-item" data-target="parking">
-              <div class="legend-color-wrapper">
-                <span class="legend-color utility"></span>
-              </div>
-              <div class="legend-text">
-                <strong>Utility (PARKING)</strong>
-                <span>Parking Space • 33 m²</span>
+              <div class="plant-level-selector" data-level="5">
+                <span class="level-badge">Л</span>
+                <div class="level-info">
+                  <strong>Vertical Vines</strong>
+                  <span>Fence climbing lianas</span>
+                </div>
+                <input type="checkbox" checked class="level-toggle" id="toggle-l5">
               </div>
             </div>
           </div>
