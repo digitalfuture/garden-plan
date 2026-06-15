@@ -5,8 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
   
   let viewBox = { x: 0, y: 0, w: imgWidth, h: imgHeight };
   let isPanning = false;
-  let startPoint = { x: 0, y: 0 };
-  let endPoint = { x: 0, y: 0 };
+  let dragStartSVG = { x: 0, y: 0 };
   let activeElement = null;
   
   // Theme Toggle
@@ -235,25 +234,61 @@ document.addEventListener('DOMContentLoaded', () => {
   // --- Pan and Zoom logic ---
   const container = document.getElementById('canvas-container');
 
+  // Helper to calculate SVG coordinate under the mouse cursor
+  function getSVGCoords(clientX, clientY) {
+    const rect = container.getBoundingClientRect();
+    const mouseX = clientX - rect.left;
+    const mouseY = clientY - rect.top;
+    
+    const wContainer = container.clientWidth;
+    const hContainer = container.clientHeight;
+    
+    const scale = (viewBox.w / viewBox.h > wContainer / hContainer)
+      ? (viewBox.w / wContainer)
+      : (viewBox.h / hContainer);
+      
+    const wRendered = viewBox.w / scale;
+    const hRendered = viewBox.h / scale;
+    
+    const offsetX = (wContainer - wRendered) / 2;
+    const offsetY = (hContainer - hRendered) / 2;
+    
+    return {
+      x: viewBox.x + (mouseX - offsetX) * scale,
+      y: viewBox.y + (mouseY - offsetY) * scale
+    };
+  }
+
   container.addEventListener('mousedown', (e) => {
     if (e.target.tagName === 'button' || e.target.closest('button')) return;
     
     isPanning = true;
-    startPoint = { x: e.clientX, y: e.clientY };
+    hideTooltip();
+    dragStartSVG = getSVGCoords(e.clientX, e.clientY);
   });
 
   window.addEventListener('mousemove', (e) => {
     if (!isPanning) return;
     
-    endPoint = { x: e.clientX, y: e.clientY };
-    const dx = endPoint.x - startPoint.x;
-    const dy = endPoint.y - startPoint.y;
+    const rect = container.getBoundingClientRect();
+    const mouseX = e.clientX - rect.left;
+    const mouseY = e.clientY - rect.top;
 
-    const scaleX = viewBox.w / container.clientWidth;
-    const scaleY = viewBox.h / container.clientHeight;
+    const wContainer = container.clientWidth;
+    const hContainer = container.clientHeight;
 
-    viewBox.x -= dx * scaleX;
-    viewBox.y -= dy * scaleY;
+    const scale = (viewBox.w / viewBox.h > wContainer / hContainer)
+      ? (viewBox.w / wContainer)
+      : (viewBox.h / hContainer);
+      
+    const wRendered = viewBox.w / scale;
+    const hRendered = viewBox.h / scale;
+    
+    const offsetX = (wContainer - wRendered) / 2;
+    const offsetY = (hContainer - hRendered) / 2;
+
+    viewBox.x = dragStartSVG.x - (mouseX - offsetX) * scale;
+    viewBox.y = dragStartSVG.y - (mouseY - offsetY) * scale;
 
     // Constrain panning bounds slightly
     viewBox.x = Math.max(-imgWidth * 0.5, Math.min(viewBox.x, imgWidth * 1.5 - viewBox.w));
@@ -262,8 +297,6 @@ document.addEventListener('DOMContentLoaded', () => {
     s.attr({
       viewBox: `${viewBox.x} ${viewBox.y} ${viewBox.w} ${viewBox.h}`
     });
-
-    startPoint = { x: e.clientX, y: e.clientY };
   });
 
   window.addEventListener('mouseup', () => {
@@ -280,17 +313,44 @@ document.addEventListener('DOMContentLoaded', () => {
     const mouseX = e.clientX - rect.left;
     const mouseY = e.clientY - rect.top;
 
-    const svgMouseX = viewBox.x + mouseX * (viewBox.w / container.clientWidth);
-    const svgMouseY = viewBox.y + mouseY * (viewBox.h / container.clientHeight);
+    const wContainer = container.clientWidth;
+    const hContainer = container.clientHeight;
+
+    const scale = (viewBox.w / viewBox.h > wContainer / hContainer)
+      ? (viewBox.w / wContainer)
+      : (viewBox.h / hContainer);
+      
+    const wRendered = viewBox.w / scale;
+    const hRendered = viewBox.h / scale;
+    
+    const offsetX = (wContainer - wRendered) / 2;
+    const offsetY = (hContainer - hRendered) / 2;
+
+    const svgMouseX = viewBox.x + (mouseX - offsetX) * scale;
+    const svgMouseY = viewBox.y + (mouseY - offsetY) * scale;
 
     const newW = viewBox.w * zoomFactor;
     const newH = viewBox.h * zoomFactor;
 
     if (newW > 100 && newW < imgWidth * 2) {
-      viewBox.x = svgMouseX - mouseX * (newW / container.clientWidth);
-      viewBox.y = svgMouseY - mouseY * (newH / container.clientHeight);
+      const newScale = (newW / newH > wContainer / hContainer)
+        ? (newW / wContainer)
+        : (newH / hContainer);
+        
+      const newWRendered = newW / newScale;
+      const newHRendered = newH / newScale;
+      
+      const newOffsetX = (wContainer - newWRendered) / 2;
+      const newOffsetY = (hContainer - newHRendered) / 2;
+
+      viewBox.x = svgMouseX - (mouseX - newOffsetX) * newScale;
+      viewBox.y = svgMouseY - (mouseY - newOffsetY) * newScale;
       viewBox.w = newW;
       viewBox.h = newH;
+
+      // Constrain panning bounds on zoom out
+      viewBox.x = Math.max(-imgWidth * 0.5, Math.min(viewBox.x, imgWidth * 1.5 - viewBox.w));
+      viewBox.y = Math.max(-imgHeight * 0.5, Math.min(viewBox.y, imgHeight * 1.5 - viewBox.h));
 
       s.attr({
         viewBox: `${viewBox.x} ${viewBox.y} ${viewBox.w} ${viewBox.h}`
@@ -431,7 +491,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const tooltip = document.getElementById('plant-tooltip');
 
   function showTooltip(e, plant) {
-    if (!tooltip) return;
+    if (!tooltip || isPanning) return;
     tooltip.innerHTML = `
       <strong>${plant.id}. ${plant.name}</strong>
       <span class="bot-name">${plant.botName}</span>
