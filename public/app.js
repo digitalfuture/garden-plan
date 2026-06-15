@@ -136,7 +136,7 @@ document.addEventListener('DOMContentLoaded', () => {
     strokeDasharray: '4 4',
     strokeOpacity: 0.45
   }));
-  gladeGroup.add(s.text(420, 783, 'ЦЕНТРАЛЬНАЯ ПОЛЯНА').attr({
+  gladeGroup.add(s.text(420, 783, 'CENTRAL GLADE').attr({
     fontFamily: 'var(--font-body)',
     fontSize: '8px',
     fontStyle: 'italic',
@@ -428,28 +428,28 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   const plantsData = {
-    'T1': { id: 'Т1', level: 4, name: 'Guava Kristal', botName: "Psidium guajava 'Kristal'", desc: 'Crispy, sweet, seedless guava variety. Medium size tree.', x: 200, y: 570, color: '#a3b18a', style: 'cloud' },
-    'T2': { id: 'Т2', level: 4, name: "Sapodilla 'Ciku Mega'", botName: 'Manilkara zapota', desc: 'Large, sweet fruit with few large seeds. Rich caramel taste.', x: 310, y: 570, color: '#ddb892', style: 'pinwheel' },
-    'T3': { id: 'Т3', level: 4, name: "Sapodilla 'Sawo Kecil'", botName: 'Manilkara zapota', desc: 'Highly decorative tree, sweet pear-like small fruits.', x: 530, y: 570, color: '#b7b7a4', style: 'pinwheel' },
-    'T4': { id: 'Т4', level: 4, name: 'Litchi', botName: 'Litchi chinensis', desc: 'Sweet Kom variety, thrives in light night coolness at 400m.', x: 640, y: 570, color: '#f28482', style: 'cloud' },
-    'T5': { id: 'Т5', level: 4, name: "Longan 'Pingpong'", botName: 'Dimocarpus longan', desc: 'Pingpong variety with large sweet fruits. Needs night cool.', x: 200, y: 720, color: '#e07a5f', style: 'cloud' },
-    'T6': { id: 'Т6', level: 4, name: 'Matoa', botName: 'Pometia pinnata', desc: 'Indonesian native, fruit tastes like rambutan, litchi and longan.', x: 200, y: 1020, color: '#f4a261', style: 'ring' },
-    'T7': { id: 'Т7', level: 4, name: 'Jaboticaba', botName: 'Plinia cauliflora', desc: 'Brazilian grape. Sweet grape-like fruits grow directly on trunk.', x: 380, y: 1020, color: '#5c4d7d', style: 'ring' },
-    'T8': { id: 'Т8', level: 4, name: "Tropical Plum 'Gondorio'", botName: "Bouea macrophylla 'Manis'", desc: 'Sweet Gondorio/Maprang. Flavor is mango-plum hybrid.', x: 640, y: 720, color: '#f4e285', style: 'spiky' },
-    'T9': { id: 'Т9', level: 4, name: "Tropical Plum 'Gondorio'", botName: "Bouea macrophylla 'Manis'", desc: 'Sweet Gondorio/Maprang. Flavor is mango-plum hybrid.', x: 200, y: 820, color: '#f4e285', style: 'spiky' },
-    'T10': { id: 'Т10', level: 4, name: 'Macadamia', botName: 'Macadamia integrifolia', desc: 'Slow growing nut tree, beautiful thornless foliage.', x: 470, y: 1020, color: '#4f772d', style: 'spiky' },
-    'T11': { id: 'Т11', level: 4, name: 'Macadamia', botName: 'Macadamia integrifolia', desc: 'Slow growing nut tree, beautiful thornless foliage.', x: 640, y: 1020, color: '#4f772d', style: 'spiky' },
-    'T12': { id: 'Т12', level: 4, name: 'White Sapodilla (Caimito)', botName: 'Chrysophyllum caimito', desc: 'Star apple, sweet jelly-like fruit, golden under-leaves.', x: 640, y: 820, color: '#d8f3dc', style: 'pinwheel' },
-    'S1': { id: 'Я3-А', level: 3, name: 'Strawberry Guava', botName: 'Psidium cattleianum', desc: 'Compact thornless bush, dark red sweet strawberry fruits.', x: 220, y: 640, color: '#d90429' },
-    'S2': { id: 'Я3-А', level: 3, name: 'Strawberry Guava', botName: 'Psidium cattleianum', desc: 'Compact thornless bush, dark red sweet strawberry fruits.', x: 620, y: 640, color: '#d90429' },
-    'S3': { id: 'Я3-Б', level: 3, name: 'Barbados Cherry (Sweet)', botName: 'Malpighia emarginata', desc: 'Rich in Vitamin C, selected sweet variety, tidy bush.', x: 200, y: 920, color: '#ffb703' },
-    'S4': { id: 'Я3-Б', level: 3, name: 'Barbados Cherry (Sweet)', botName: 'Malpighia emarginata', desc: 'Rich in Vitamin C, selected sweet variety, tidy bush.', x: 640, y: 920, color: '#ffb703' },
-    'S5': { id: 'Я3-В', level: 3, name: 'Dwarf Sweet Mulberry', botName: "Morus alba 'Dwarf'", desc: 'Grows only 1.5-2m tall, very sweet black/white berries.', x: 290, y: 1020, color: '#3d348b' },
-    'S6': { id: 'Я3-В', level: 3, name: 'Dwarf Sweet Mulberry', botName: "Morus alba 'Dwarf'", desc: 'Grows only 1.5-2m tall, very sweet black/white berries.', x: 560, y: 1020, color: '#3d348b' },
-    'F1': { id: 'Я2-А', level: 2, name: 'Pentas lanceolata', botName: 'Pentas lanceolata', desc: 'Attracts butterflies, compact non-toxic bushes, blooms all year.', x: 450, y: 535, color: '#ff4d6d' },
-    'F2': { id: 'Я2-Б', level: 2, name: 'Verbena bonariensis', botName: 'Verbena bonariensis', desc: 'Tall airy purple flowers, butterfly favorite.', x: 570, y: 535, color: '#b5179e' },
-    'F3': { id: 'Я2-В', level: 2, name: 'Cosmos (Yellow/Pink)', botName: 'Cosmos sulphureus', desc: 'Easy self-seeding, zero-maintenance bright carpet.', x: 490, y: 570, color: '#ffb703' },
-    'F4': { id: 'Я2-Г', level: 2, name: 'Zinnia elegans', botName: 'Zinnia elegans', desc: 'Bright, hypoallergenic, safe for pets.', x: 620, y: 565, color: '#ff758f' }
+    'T1': { id: 'T1', level: 4, name: 'Guava Kristal', botName: "Psidium guajava 'Kristal'", desc: 'Crispy, sweet, seedless guava variety. Medium size tree.', x: 200, y: 570, color: '#a3b18a', style: 'cloud' },
+    'T2': { id: 'T2', level: 4, name: "Sapodilla 'Ciku Mega'", botName: 'Manilkara zapota', desc: 'Large, sweet fruit with few large seeds. Rich caramel taste.', x: 310, y: 570, color: '#ddb892', style: 'pinwheel' },
+    'T3': { id: 'T3', level: 4, name: "Sapodilla 'Sawo Kecil'", botName: 'Manilkara zapota', desc: 'Highly decorative tree, sweet pear-like small fruits.', x: 530, y: 570, color: '#b7b7a4', style: 'pinwheel' },
+    'T4': { id: 'T4', level: 4, name: 'Litchi', botName: 'Litchi chinensis', desc: 'Sweet Kom variety, thrives in light night coolness at 400m.', x: 640, y: 570, color: '#f28482', style: 'cloud' },
+    'T5': { id: 'T5', level: 4, name: "Longan 'Pingpong'", botName: 'Dimocarpus longan', desc: 'Pingpong variety with large sweet fruits. Needs night cool.', x: 200, y: 720, color: '#e07a5f', style: 'cloud' },
+    'T6': { id: 'T6', level: 4, name: 'Matoa', botName: 'Pometia pinnata', desc: 'Indonesian native, fruit tastes like rambutan, litchi and longan.', x: 200, y: 1020, color: '#f4a261', style: 'ring' },
+    'T7': { id: 'T7', level: 4, name: 'Jaboticaba', botName: 'Plinia cauliflora', desc: 'Brazilian grape. Sweet grape-like fruits grow directly on trunk.', x: 380, y: 1020, color: '#5c4d7d', style: 'ring' },
+    'T8': { id: 'T8', level: 4, name: "Tropical Plum 'Gondorio'", botName: "Bouea macrophylla 'Manis'", desc: 'Sweet Gondorio/Maprang. Flavor is mango-plum hybrid.', x: 640, y: 720, color: '#f4e285', style: 'spiky' },
+    'T9': { id: 'T9', level: 4, name: "Tropical Plum 'Gondorio'", botName: "Bouea macrophylla 'Manis'", desc: 'Sweet Gondorio/Maprang. Flavor is mango-plum hybrid.', x: 200, y: 820, color: '#f4e285', style: 'spiky' },
+    'T10': { id: 'T10', level: 4, name: 'Macadamia', botName: 'Macadamia integrifolia', desc: 'Slow growing nut tree, beautiful thornless foliage.', x: 470, y: 1020, color: '#4f772d', style: 'spiky' },
+    'T11': { id: 'T11', level: 4, name: 'Macadamia', botName: 'Macadamia integrifolia', desc: 'Slow growing nut tree, beautiful thornless foliage.', x: 640, y: 1020, color: '#4f772d', style: 'spiky' },
+    'T12': { id: 'T12', level: 4, name: 'White Sapodilla (Caimito)', botName: 'Chrysophyllum caimito', desc: 'Star apple, sweet jelly-like fruit, golden under-leaves.', x: 640, y: 820, color: '#d8f3dc', style: 'pinwheel' },
+    'S1': { id: 'L3-A', level: 3, name: 'Strawberry Guava', botName: 'Psidium cattleianum', desc: 'Compact thornless bush, dark red sweet strawberry fruits.', x: 220, y: 640, color: '#d90429' },
+    'S2': { id: 'L3-A', level: 3, name: 'Strawberry Guava', botName: 'Psidium cattleianum', desc: 'Compact thornless bush, dark red sweet strawberry fruits.', x: 620, y: 640, color: '#d90429' },
+    'S3': { id: 'L3-B', level: 3, name: 'Barbados Cherry (Sweet)', botName: 'Malpighia emarginata', desc: 'Rich in Vitamin C, selected sweet variety, tidy bush.', x: 200, y: 920, color: '#ffb703' },
+    'S4': { id: 'L3-B', level: 3, name: 'Barbados Cherry (Sweet)', botName: 'Malpighia emarginata', desc: 'Rich in Vitamin C, selected sweet variety, tidy bush.', x: 640, y: 920, color: '#ffb703' },
+    'S5': { id: 'L3-C', level: 3, name: 'Dwarf Sweet Mulberry', botName: "Morus alba 'Dwarf'", desc: 'Grows only 1.5-2m tall, very sweet black/white berries.', x: 290, y: 1020, color: '#3d348b' },
+    'S6': { id: 'L3-C', level: 3, name: 'Dwarf Sweet Mulberry', botName: "Morus alba 'Dwarf'", desc: 'Grows only 1.5-2m tall, very sweet black/white berries.', x: 560, y: 1020, color: '#3d348b' },
+    'F1': { id: 'L2-A', level: 2, name: 'Pentas lanceolata', botName: 'Pentas lanceolata', desc: 'Attracts butterflies, compact non-toxic bushes, blooms all year.', x: 450, y: 535, color: '#ff4d6d' },
+    'F2': { id: 'L2-B', level: 2, name: 'Verbena bonariensis', botName: 'Verbena bonariensis', desc: 'Tall airy purple flowers, butterfly favorite.', x: 570, y: 535, color: '#b5179e' },
+    'F3': { id: 'L2-C', level: 2, name: 'Cosmos (Yellow/Pink)', botName: 'Cosmos sulphureus', desc: 'Easy self-seeding, zero-maintenance bright carpet.', x: 490, y: 570, color: '#ffb703' },
+    'F4': { id: 'L2-D', level: 2, name: 'Zinnia elegans', botName: 'Zinnia elegans', desc: 'Bright, hypoallergenic, safe for pets.', x: 620, y: 565, color: '#ff758f' }
   };
 
   // Wavy circle path for organic foliage crowns
@@ -465,37 +465,97 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Draw architectural tree symbols
   function drawTreeSymbol(g, cx, cy, r, color, label, style) {
-    g.add(s.circle(cx + 2, cy + 2, r).attr({ fill: 'rgba(0,0,0,0.1)' })); // shadow
-    let fillPath = style === 'cloud' ? getWavyPath(cx, cy, r, 9, 3) : null;
-    g.add(fillPath ? s.path(fillPath).attr({ fill: color, fillOpacity: 0.65 }) : s.circle(cx, cy, r).attr({ fill: color, fillOpacity: 0.65 }));
+    // Shadow
+    g.add(s.circle(cx + 2, cy + 2, r).attr({ fill: 'rgba(0,0,0,0.1)' }));
     
     if (style === 'cloud') {
-      g.add(s.path(fillPath).attr({ fill: 'none', stroke: 'var(--ink-color)', strokeWidth: 0.8 }));
-      for (let i = 0; i < 5; i++) {
-        let a = (i / 5) * Math.PI * 2;
-        g.add(s.line(cx, cy, cx + Math.cos(a) * (r * 0.7), cy + Math.sin(a) * (r * 0.7)).attr({ stroke: 'var(--ink-color)', strokeWidth: 0.4 }));
+      // Deciduous tree: wavy cloud foliage
+      let outerWavy = getWavyPath(cx, cy, r, 9, 3);
+      let innerWavy = getWavyPath(cx, cy, r * 0.85, 9, 2.5);
+      
+      g.add(s.path(outerWavy).attr({ fill: color, fillOpacity: 0.65 }));
+      g.add(s.path(outerWavy).attr({ fill: 'none', stroke: 'var(--ink-color)', strokeWidth: 0.8 }));
+      g.add(s.path(innerWavy).attr({ fill: 'none', stroke: 'var(--ink-color)', strokeWidth: 0.4, strokeOpacity: 0.7 }));
+      
+      // Draw internal branches
+      for (let i = 0; i < 6; i++) {
+        let a = (i / 6) * Math.PI * 2;
+        let x1 = cx + Math.cos(a) * (r * 0.25);
+        let y1 = cy + Math.sin(a) * (r * 0.25);
+        let x2 = cx + Math.cos(a + 0.1) * (r * 0.65);
+        let y2 = cy + Math.sin(a + 0.1) * (r * 0.65);
+        g.add(s.path(`M ${x1} ${y1} Q ${cx + Math.cos(a)*(r*0.45)} ${cy + Math.sin(a)*(r*0.45)} ${x2} ${y2}`).attr({
+          fill: 'none', stroke: 'var(--ink-color)', strokeWidth: 0.45
+        }));
       }
     } else if (style === 'spiky') {
-      let spikes = [];
-      for (let i = 0; i < 12; i++) {
-        let a = (i / 12) * Math.PI * 2, am = ((i + 0.5) / 12) * Math.PI * 2;
-        if (i === 0) spikes.push(`M ${cx + Math.cos(a) * r} ${cy + Math.sin(a) * r}`);
-        spikes.push(`L ${cx + Math.cos(am) * (r * 0.35)} ${cy + Math.sin(am) * (r * 0.35)} L ${cx + Math.cos(a) * r} ${cy + Math.sin(a) * r}`);
+      // Evergreen/Conifer style: spiky star with internal facets
+      let outerSpikes = [];
+      const numSpikes = 16;
+      for (let i = 0; i < numSpikes; i++) {
+        let a = (i / numSpikes) * Math.PI * 2;
+        let am = ((i + 0.5) / numSpikes) * Math.PI * 2;
+        
+        let xOut = cx + Math.cos(a) * r;
+        let yOut = cy + Math.sin(a) * r;
+        let xIn = cx + Math.cos(am) * (r * 0.4);
+        let yIn = cy + Math.sin(am) * (r * 0.4);
+        
+        if (i === 0) {
+          outerSpikes.push(`M ${xOut} ${yOut}`);
+        }
+        outerSpikes.push(`L ${xIn} ${yIn} L ${xOut} ${yOut}`);
+        
+        // Internal branch rays
+        g.add(s.line(cx, cy, xOut, yOut).attr({ stroke: 'var(--ink-color)', strokeWidth: 0.35 }));
+        g.add(s.line(cx, cy, xIn, yIn).attr({ stroke: 'var(--ink-color)', strokeWidth: 0.25, strokeOpacity: 0.6 }));
       }
-      g.add(s.path(spikes.join(' ') + ' Z').attr({ fill: 'none', stroke: 'var(--ink-color)', strokeWidth: 0.7 }));
+      
+      g.add(s.path(outerSpikes.join(' ') + ' Z').attr({ fill: color, fillOpacity: 0.65 }));
+      g.add(s.path(outerSpikes.join(' ') + ' Z').attr({ fill: 'none', stroke: 'var(--ink-color)', strokeWidth: 0.8 }));
+      g.add(s.circle(cx, cy, r * 0.3).attr({ fill: 'none', stroke: 'var(--ink-color)', strokeWidth: 0.4 }));
     } else if (style === 'pinwheel') {
+      // Palm/Rosette style: overlapping radial fronds
+      g.add(s.circle(cx, cy, r).attr({ fill: color, fillOpacity: 0.65 }));
       g.add(s.circle(cx, cy, r).attr({ fill: 'none', stroke: 'var(--ink-color)', strokeWidth: 0.8 }));
-      for (let i = 0; i < 10; i++) {
-        let a = (i / 10) * Math.PI * 2;
-        g.add(s.line(cx + Math.cos(a) * (r * 0.25), cy + Math.sin(a) * (r * 0.25), cx + Math.cos(a) * r, cy + Math.sin(a) * r).attr({ stroke: 'var(--ink-color)', strokeWidth: 0.4 }));
+      
+      const numFronds = 10;
+      for (let i = 0; i < numFronds; i++) {
+        let a = (i / numFronds) * Math.PI * 2;
+        let aLeft = a - 0.15;
+        let aRight = a + 0.15;
+        
+        let xTip = cx + Math.cos(a) * r;
+        let yTip = cy + Math.sin(a) * r;
+        let xLeft = cx + Math.cos(aLeft) * (r * 0.3);
+        let yLeft = cy + Math.sin(aLeft) * (r * 0.3);
+        let xRight = cx + Math.cos(aRight) * (r * 0.3);
+        let yRight = cy + Math.sin(aRight) * (r * 0.3);
+        
+        g.add(s.path(`M ${xLeft} ${yLeft} L ${xTip} ${yTip} L ${xRight} ${yRight} Z`).attr({
+          fill: 'none', stroke: 'var(--ink-color)', strokeWidth: 0.45
+        }));
       }
-      g.add(s.circle(cx, cy, r * 0.25).attr({ fill: 'none', stroke: 'var(--ink-color)', strokeWidth: 0.4 }));
+      g.add(s.circle(cx, cy, r * 0.25).attr({ fill: 'none', stroke: 'var(--ink-color)', strokeWidth: 0.5 }));
     } else { // ring
+      // Specimen ring style: double ring with outer hatch marks and organic center
+      g.add(s.circle(cx, cy, r).attr({ fill: color, fillOpacity: 0.65 }));
       g.add(s.circle(cx, cy, r).attr({ fill: 'none', stroke: 'var(--ink-color)', strokeWidth: 0.8 }));
-      g.add(s.circle(cx, cy, r * 0.72).attr({ fill: 'none', stroke: 'var(--ink-color)', strokeWidth: 0.5, strokeDasharray: '2 1.5' }));
-      g.add(s.circle(cx, cy, r * 0.44).attr({ fill: 'none', stroke: 'var(--ink-color)', strokeWidth: 0.4 }));
-      g.add(s.line(cx - r, cy, cx + r, cy).attr({ stroke: 'var(--ink-color)', strokeWidth: 0.3 }));
-      g.add(s.line(cx, cy - r, cx, cy + r).attr({ stroke: 'var(--ink-color)', strokeWidth: 0.3 }));
+      g.add(s.circle(cx, cy, r * 0.85).attr({ fill: 'none', stroke: 'var(--ink-color)', strokeWidth: 0.4 }));
+      g.add(s.circle(cx, cy, r * 0.65).attr({ fill: 'none', stroke: 'var(--ink-color)', strokeWidth: 0.4, strokeDasharray: '2 1.5' }));
+      
+      // Radial hatch marks
+      const numHatches = 24;
+      for (let i = 0; i < numHatches; i++) {
+        let a = (i / numHatches) * Math.PI * 2;
+        g.add(s.line(cx + Math.cos(a) * (r * 0.85), cy + Math.sin(a) * (r * 0.85), cx + Math.cos(a) * r, cy + Math.sin(a) * r).attr({
+          stroke: 'var(--ink-color)', strokeWidth: 0.4
+        }));
+      }
+      
+      // Center cross lines
+      g.add(s.line(cx - r * 0.65, cy, cx + r * 0.65, cy).attr({ stroke: 'var(--ink-color)', strokeWidth: 0.3 }));
+      g.add(s.line(cx, cy - r * 0.65, cx, cy + r * 0.65).attr({ stroke: 'var(--ink-color)', strokeWidth: 0.3 }));
     }
     
     // Label Medallion
@@ -563,9 +623,17 @@ document.addEventListener('DOMContentLoaded', () => {
       group.add(g);
     } else if (plant.level === 3) {
       const g = s.group().addClass('plant-marker shrub-marker').attr({ id: `marker-${key}` });
-      g.add(s.path(getWavyPath(plant.x + 1.5, plant.y + 1.5, 12, 8, 2)).attr({ fill: 'rgba(0,0,0,0.1)' }));
-      g.add(s.path(getWavyPath(plant.x, plant.y, 12, 8, 2)).attr({ fill: plant.color, fillOpacity: 0.65 }));
-      g.add(s.path(getWavyPath(plant.x, plant.y, 12, 8, 2)).attr({ fill: 'none', stroke: 'var(--ink-color)', strokeWidth: 0.75 }));
+      // Shrub shadow
+      g.add(s.circle(plant.x + 1.5, plant.y + 1.5, 12).attr({ fill: 'rgba(0,0,0,0.1)' }));
+      // Multi-lobed foliage contour
+      const numLobes = 6;
+      for (let i = 0; i < numLobes; i++) {
+        let angle = (i / numLobes) * Math.PI * 2;
+        let lx = plant.x + Math.cos(angle) * 4.5;
+        let ly = plant.y + Math.sin(angle) * 4.5;
+        g.add(s.circle(lx, ly, 8).attr({ fill: plant.color, fillOpacity: 0.6 }));
+        g.add(s.circle(lx, ly, 8).attr({ fill: 'none', stroke: 'var(--ink-color)', strokeWidth: 0.45 }));
+      }
       g.add(s.circle(plant.x, plant.y, 5).attr({ fill: 'var(--card-bg)', stroke: 'var(--ink-color)', strokeWidth: 0.4 }));
       g.add(s.text(plant.x, plant.y + 1.8, plant.id).attr({
         fontFamily: 'var(--font-display)', fontSize: '5.5px', fontWeight: '600', textAnchor: 'middle', fill: 'var(--ink-color)'
@@ -576,9 +644,26 @@ document.addEventListener('DOMContentLoaded', () => {
       group.add(g);
     } else if (plant.level === 2) {
       const g = s.group().addClass('plant-marker flower-marker').attr({ id: `marker-${key}` });
-      g.add(s.circle(plant.x - 3.5, plant.y - 2, 7).attr({ fill: plant.color, fillOpacity: 0.7, stroke: 'var(--ink-color)', strokeWidth: 0.5 }));
-      g.add(s.circle(plant.x + 3.5, plant.y - 1, 6).attr({ fill: plant.color, fillOpacity: 0.7, stroke: 'var(--ink-color)', strokeWidth: 0.5 }));
-      g.add(s.circle(plant.x, plant.y + 3.5, 6.5).attr({ fill: plant.color, fillOpacity: 0.7, stroke: 'var(--ink-color)', strokeWidth: 0.5 }));
+      // Three flower clusters
+      const flowers = [
+        { cx: plant.x - 3.5, cy: plant.y - 2, r: 7 },
+        { cx: plant.x + 3.5, cy: plant.y - 1, r: 6 },
+        { cx: plant.x, cy: plant.y + 3.5, r: 6.5 }
+      ];
+      
+      // Shadow
+      g.add(s.circle(plant.x + 1, plant.y + 1, 9).attr({ fill: 'rgba(0,0,0,0.07)' }));
+      
+      flowers.forEach(fl => {
+        g.add(s.circle(fl.cx, fl.cy, fl.r).attr({ fill: plant.color, fillOpacity: 0.65, stroke: 'var(--ink-color)', strokeWidth: 0.5 }));
+        // Star pattern inside each flower circle
+        for (let i = 0; i < 4; i++) {
+          let a = (i / 4) * Math.PI * 2;
+          g.add(s.line(fl.cx - Math.cos(a)*(fl.r*0.6), fl.cy - Math.sin(a)*(fl.r*0.6), fl.cx + Math.cos(a)*(fl.r*0.6), fl.cy + Math.sin(a)*(fl.r*0.6)).attr({
+            stroke: 'var(--ink-color)', strokeWidth: 0.3, strokeOpacity: 0.6
+          }));
+        }
+      });
       g.add(s.circle(plant.x, plant.y, 5).attr({ fill: 'var(--card-bg)', stroke: 'var(--ink-color)', strokeWidth: 0.4 }));
       g.add(s.text(plant.x, plant.y + 2, plant.id).attr({
         fontFamily: 'var(--font-display)', fontSize: '5.5px', fontWeight: '700', textAnchor: 'middle', fill: 'var(--ink-color)'
@@ -601,7 +686,7 @@ document.addEventListener('DOMContentLoaded', () => {
   plantGroups[5].add(westVine);
   
   const westVineData = {
-    id: 'Л-Запад', name: 'West Fence Vines', botName: 'Passiflora & Vitis vinifera',
+    id: 'L5-W', name: 'West Fence Vines', botName: 'Passiflora & Vitis vinifera',
     desc: 'Markisa Madu (sweet honey passionfruit) and seedless grapes (Isabella, Jupiter, Ninel) climbing the western fence.'
   };
   westVine.node.addEventListener('mouseenter', (e) => showTooltip(e, westVineData));
@@ -626,7 +711,7 @@ document.addEventListener('DOMContentLoaded', () => {
   plantGroups[5].add(eastVine);
   
   const eastVineData = {
-    id: 'Л-Восток', name: 'East Dragonfruit', botName: 'Selenicereus undatus',
+    id: 'L5-E', name: 'East Dragonfruit', botName: 'Selenicereus undatus',
     desc: 'Three varieties of pitahaya (White, Red, and sweet Yellow) growing on supports along the eastern fence.'
   };
   eastVine.node.addEventListener('mouseenter', (e) => showTooltip(e, eastVineData));
@@ -651,7 +736,7 @@ document.addEventListener('DOMContentLoaded', () => {
   plantGroups[1].add(mintGroup);
   
   const mintData = {
-    id: 'Я1-В', name: 'Wild Mint (Mentha)', botName: 'Mentha arvensis / javanica',
+    id: 'L1-C', name: 'Wild Mint (Mentha)', botName: 'Mentha arvensis / javanica',
     desc: 'Planted in the cool semi-shade of the house cutout. Repels pests, smells pleasant, and attracts butterflies.'
   };
   mintGroup.node.addEventListener('mouseenter', (e) => showTooltip(e, mintData));
@@ -659,16 +744,16 @@ document.addEventListener('DOMContentLoaded', () => {
   mintGroup.node.addEventListener('mouseleave', () => hideTooltip());
 
   const groundcoverPositions = [
-    { x: 200, y: 350, type: 'lippia', name: 'Phyla nodiflora (Lippia)', id: 'Я1-Б', desc: 'Groundcover substitute for lawn, handles light traffic. White-pink flowers attract butterflies.', color: '#f28482' },
-    { x: 280, y: 300, type: 'arachis', name: 'Arachis pintoi (Kacang-kacangan)', id: 'Я1-А', desc: 'Creeping wild peanut. Fixes nitrogen, has beautiful yellow flowers, chokes weeds. No mowing needed.', color: '#ffb703' },
-    { x: 250, y: 450, type: 'lippia', name: 'Phyla nodiflora (Lippia)', id: 'Я1-Б', desc: 'Groundcover substitute for lawn, handles light traffic. White-pink flowers attract butterflies.', color: '#f28482' },
-    { x: 300, y: 550, type: 'arachis', name: 'Arachis pintoi (Kacang-kacangan)', id: 'Я1-А', desc: 'Creeping wild peanut. Fixes nitrogen, has beautiful yellow flowers, chokes weeds. No mowing needed.', color: '#ffb703' },
-    { x: 350, y: 720, type: 'lippia', name: 'Phyla nodiflora (Lippia)', id: 'Я1-Б', desc: 'Groundcover substitute for lawn, handles light traffic. White-pink flowers attract butterflies.', color: '#f28482' },
-    { x: 490, y: 740, type: 'arachis', name: 'Arachis pintoi (Kacang-kacangan)', id: 'Я1-А', desc: 'Creeping wild peanut. Fixes nitrogen, has beautiful yellow flowers, chokes weeds. No mowing needed.', color: '#ffb703' },
-    { x: 420, y: 830, type: 'arachis', name: 'Arachis pintoi (Kacang-kacangan)', id: 'Я1-А', desc: 'Creeping wild peanut. Fixes nitrogen, has beautiful yellow flowers, chokes weeds. No mowing needed.', color: '#ffb703' },
-    { x: 380, y: 920, type: 'lippia', name: 'Phyla nodiflora (Lippia)', id: 'Я1-Б', desc: 'Groundcover substitute for lawn, handles light traffic. White-pink flowers attract butterflies.', color: '#f28482' },
-    { x: 480, y: 960, type: 'lippia', name: 'Phyla nodiflora (Lippia)', id: 'Я1-Б', desc: 'Groundcover substitute for lawn, handles light traffic. White-pink flowers attract butterflies.', color: '#f28482' },
-    { x: 420, y: 1060, type: 'arachis', name: 'Arachis pintoi (Kacang-kacangan)', id: 'Я1-А', desc: 'Creeping wild peanut. Fixes nitrogen, has beautiful yellow flowers, chokes weeds. No mowing needed.', color: '#ffb703' }
+    { x: 200, y: 350, type: 'lippia', name: 'Phyla nodiflora (Lippia)', id: 'L1-B', desc: 'Groundcover substitute for lawn, handles light traffic. White-pink flowers attract butterflies.', color: '#f28482' },
+    { x: 280, y: 300, type: 'arachis', name: 'Arachis pintoi (Kacang-kacangan)', id: 'L1-A', desc: 'Creeping wild peanut. Fixes nitrogen, has beautiful yellow flowers, chokes weeds. No mowing needed.', color: '#ffb703' },
+    { x: 250, y: 450, type: 'lippia', name: 'Phyla nodiflora (Lippia)', id: 'L1-B', desc: 'Groundcover substitute for lawn, handles light traffic. White-pink flowers attract butterflies.', color: '#f28482' },
+    { x: 300, y: 550, type: 'arachis', name: 'Arachis pintoi (Kacang-kacangan)', id: 'L1-A', desc: 'Creeping wild peanut. Fixes nitrogen, has beautiful yellow flowers, chokes weeds. No mowing needed.', color: '#ffb703' },
+    { x: 350, y: 720, type: 'lippia', name: 'Phyla nodiflora (Lippia)', id: 'L1-B', desc: 'Groundcover substitute for lawn, handles light traffic. White-pink flowers attract butterflies.', color: '#f28482' },
+    { x: 490, y: 740, type: 'arachis', name: 'Arachis pintoi (Kacang-kacangan)', id: 'L1-A', desc: 'Creeping wild peanut. Fixes nitrogen, has beautiful yellow flowers, chokes weeds. No mowing needed.', color: '#ffb703' },
+    { x: 420, y: 830, type: 'arachis', name: 'Arachis pintoi (Kacang-kacangan)', id: 'L1-A', desc: 'Creeping wild peanut. Fixes nitrogen, has beautiful yellow flowers, chokes weeds. No mowing needed.', color: '#ffb703' },
+    { x: 380, y: 920, type: 'lippia', name: 'Phyla nodiflora (Lippia)', id: 'L1-B', desc: 'Groundcover substitute for lawn, handles light traffic. White-pink flowers attract butterflies.', color: '#f28482' },
+    { x: 480, y: 960, type: 'lippia', name: 'Phyla nodiflora (Lippia)', id: 'L1-B', desc: 'Groundcover substitute for lawn, handles light traffic. White-pink flowers attract butterflies.', color: '#f28482' },
+    { x: 420, y: 1060, type: 'arachis', name: 'Arachis pintoi (Kacang-kacangan)', id: 'L1-A', desc: 'Creeping wild peanut. Fixes nitrogen, has beautiful yellow flowers, chokes weeds. No mowing needed.', color: '#ffb703' }
   ];
   
   groundcoverPositions.forEach((gc, idx) => {
