@@ -19,29 +19,23 @@
 </head>
 <body class="dark-theme">
   <div class="app-container">
-    <main class="app-body-centered">
-      <div class="plan-card-centered">
-        <div class="plan-card-header">
-          <div class="plan-title">
-            <i class="fa-solid fa-compass"></i>
-            <h2>Интерактивный план участка</h2>
-          </div>
-          <div class="map-toolbar">
-            <button id="btn-zoom-in" class="btn-tool" title="Приблизить"><i class="fa-solid fa-magnifying-glass-plus"></i></button>
-            <button id="btn-zoom-out" class="btn-tool" title="Отдалить"><i class="fa-solid fa-magnifying-glass-minus"></i></button>
-            <button id="btn-reset" class="btn-tool" title="Сбросить вид"><i class="fa-solid fa-arrows-to-dot"></i></button>
-            <div class="divider"></div>
-            <button id="theme-toggle" class="btn-tool" title="Переключить тему"><i class="fa-solid fa-moon"></i></button>
-          </div>
-        </div>
+    <main class="app-body-full">
+      <!-- Fullscreen SVG Canvas Container -->
+      <div class="canvas-container" id="canvas-container">
+        <!-- SVG will be loaded/injected here via Snap.svg -->
+        <svg id="svg-canvas" width="100%" height="100%"></svg>
         
-        <div class="canvas-container" id="canvas-container">
-          <!-- SVG will be loaded/injected here via Snap.svg -->
-          <svg id="svg-canvas" width="100%" height="100%"></svg>
+        <!-- Floating Toolbar on Map -->
+        <div class="map-toolbar-floating">
+          <button id="btn-zoom-in" class="btn-tool" title="Приблизить"><i class="fa-solid fa-magnifying-glass-plus"></i></button>
+          <button id="btn-zoom-out" class="btn-tool" title="Отдалить"><i class="fa-solid fa-magnifying-glass-minus"></i></button>
+          <button id="btn-reset" class="btn-tool" title="Сбросить вид"><i class="fa-solid fa-arrows-to-dot"></i></button>
+          <div class="divider"></div>
+          <button id="theme-toggle" class="btn-tool" title="Переключить тему"><i class="fa-solid fa-moon"></i></button>
         </div>
       </div>
       
-      <!-- Legend strictly below the plan -->
+      <!-- Legend strictly below the plan at the bottom -->
       <div class="plan-legend-below">
         <div class="legend-item">
           <span class="legend-color residential"></span>

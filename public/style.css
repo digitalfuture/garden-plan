@@ -22,7 +22,7 @@
   --color-utility: #a78bfa;
   
   --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-  --border-radius: 16px;
+  --border-radius: 12px;
   --transition-speed: 0.3s;
 }
 
@@ -62,112 +62,25 @@ body {
   background-color: var(--bg-primary);
   color: var(--text-primary);
   height: 100vh;
-  min-height: 100vh;
+  width: 100vw;
   overflow: hidden;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease;
 }
 
 .app-container {
   width: 100%;
-  max-width: 1200px;
   height: 100%;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  overflow: hidden;
 }
 
-.app-body-centered {
+.app-body-full {
   width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  max-width: 800px; /* Constrain width for a clean centered look */
 }
 
-/* Plan Card Layout */
-.plan-card-centered {
-  flex: 1;
-  background: var(--bg-secondary);
-  border-radius: var(--border-radius);
-  border: 1px solid var(--border-color);
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  box-shadow: var(--shadow-lg);
-  min-height: 0; /* Important for inner flex scrolling */
-  transition: background-color var(--transition-speed) ease, border-color var(--transition-speed) ease;
-}
-
-.plan-card-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 14px 20px;
-  border-bottom: 1px solid var(--border-color);
-  z-index: 5;
-}
-
-.plan-title {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.plan-title i {
-  color: var(--accent-color);
-  font-size: 16px;
-}
-
-.plan-title h2 {
-  font-size: 15px;
-  font-weight: 700;
-}
-
-/* Toolbar */
-.map-toolbar {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  background: var(--bg-tertiary);
-  padding: 4px;
-  border-radius: 10px;
-  border: 1px solid var(--border-color);
-}
-
-.btn-tool {
-  background: transparent;
-  border: none;
-  color: var(--text-secondary);
-  width: 32px;
-  height: 32px;
-  border-radius: 8px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 14px;
-  transition: all 0.2s ease;
-}
-
-.btn-tool:hover {
-  background: var(--border-color);
-  color: var(--text-primary);
-}
-
-.map-toolbar .divider {
-  width: 1px;
-  height: 20px;
-  background: var(--border-color);
-  margin: 0 4px;
-}
-
-/* Canvas Area */
+/* Canvas Area taking full space */
 .canvas-container {
   flex: 1;
   position: relative;
@@ -187,31 +100,75 @@ body {
   user-select: none;
 }
 
-/* Legend Below Plan */
+/* Floating Toolbar on Canvas */
+.map-toolbar-floating {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--bg-secondary);
+  padding: 6px;
+  border-radius: var(--border-radius);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-lg);
+  backdrop-filter: blur(8px);
+}
+
+.btn-tool {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  transition: all 0.2s ease;
+}
+
+.btn-tool:hover {
+  background: var(--border-color);
+  color: var(--text-primary);
+}
+
+.map-toolbar-floating .divider {
+  width: 1px;
+  height: 24px;
+  background: var(--border-color);
+  margin: 0 4px;
+}
+
+/* Legend Bottom Bar */
 .plan-legend-below {
   background: var(--bg-secondary);
-  border: 1px solid var(--border-color);
-  border-radius: var(--border-radius);
-  padding: 16px 24px;
+  border-top: 1px solid var(--border-color);
+  padding: 16px 40px;
   display: flex;
   justify-content: space-around;
-  gap: 20px;
-  box-shadow: var(--shadow-lg);
+  gap: 30px;
+  width: 100%;
+  z-index: 5;
   transition: background-color var(--transition-speed) ease, border-color var(--transition-speed) ease;
 }
 
 .legend-item {
   display: flex;
-  align-items: flex-start;
-  gap: 12px;
+  align-items: center;
+  gap: 16px;
   flex: 1;
+  max-width: 320px;
 }
 
 .legend-color {
-  width: 16px;
-  height: 16px;
-  border-radius: 4px;
-  margin-top: 2px;
+  width: 20px;
+  height: 20px;
+  border-radius: 6px;
   flex-shrink: 0;
 }
 
@@ -255,26 +212,13 @@ body {
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
-  body {
-    overflow: auto;
-  }
-  
-  .app-container {
-    height: auto;
-    padding: 10px;
-  }
-  
-  .app-body-centered {
-    height: auto;
-  }
-  
-  .plan-card-centered {
-    height: 70vh;
-  }
-  
   .plan-legend-below {
     flex-direction: column;
     gap: 14px;
-    padding: 16px;
+    padding: 16px 20px;
+  }
+  
+  .legend-item {
+    max-width: none;
   }
 }
