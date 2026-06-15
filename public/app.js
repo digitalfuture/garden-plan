@@ -32,20 +32,20 @@ document.addEventListener('DOMContentLoaded', () => {
   
   // Define objects and their coordinates based on user sketch
   const objectsData = {
-    'main-house': {
-      title: 'Main House (HOUSE)',
-      category: 'residential',
-      points: [420, 650, 690, 650, 690, 950, 420, 950]
-    },
     'parking': {
       title: 'Parking Area (PARKING)',
       category: 'utility',
-      points: [420, 950, 690, 950, 690, 1100, 420, 1100]
+      points: [420, 200, 690, 200, 690, 350, 420, 350]
+    },
+    'main-house': {
+      title: 'Main House (HOUSE)',
+      category: 'residential',
+      points: [420, 350, 690, 350, 690, 650, 420, 650]
     },
     'garden': {
       title: 'Free Territory / Garden',
       category: 'garden',
-      points: [150, 200, 690, 200, 690, 650, 420, 650, 420, 1100, 150, 1100]
+      points: [150, 200, 420, 200, 420, 650, 690, 650, 690, 1100, 150, 1100]
     }
   };
 
