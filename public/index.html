@@ -73,7 +73,17 @@
                 <span>Parking Area • 72 m²</span>
               </div>
             </div>
-          </div>
+        <!-- Floating Compass on the Right (North Indicator) -->
+        <div class="map-compass-floating" title="North is Up">
+          <svg width="50" height="50" viewBox="0 0 50 50">
+            <circle cx="25" cy="25" r="20" fill="none" stroke="var(--border-color)" stroke-width="1.5" />
+            <line x1="25" y1="5" x2="25" y2="45" stroke="var(--border-color)" stroke-width="1" stroke-dasharray="2 2" />
+            <line x1="5" y1="25" x2="45" y2="25" stroke="var(--border-color)" stroke-width="1" stroke-dasharray="2 2" />
+            <!-- North Arrow pointing straight up -->
+            <polygon points="25,9 30,23 25,20 20,23" fill="var(--color-residential)" />
+            <!-- N Label at the top -->
+            <text x="25" y="8" font-family="var(--font-display)" font-size="10" font-weight="800" fill="var(--text-primary)" text-anchor="middle">N</text>
+          </svg>
         </div>
       </div>
     </main>

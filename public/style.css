@@ -380,6 +380,29 @@ body {
 
 
 
+/* Floating Compass (Bottom-Right) */
+.map-compass-floating {
+  position: absolute;
+  bottom: 24px;
+  right: 24px;
+  z-index: 10;
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  padding: 8px;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none; /* Let drag events pass to SVG canvas */
+  transition: background-color var(--transition-speed) ease, border-color var(--transition-speed) ease;
+}
+
+.map-compass-floating svg polygon {
+  filter: drop-shadow(0 0 3px var(--color-residential));
+}
+
 /* Responsive adjustments */
 @media (max-width: 576px) {
   .plan-legend-floating {
