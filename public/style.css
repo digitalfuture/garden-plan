@@ -109,7 +109,8 @@ body {
   position: absolute;
   top: 0;
   left: 0;
-  background-color: var(--bg-primary);
+  background-color: #ebdcb9; /* Warm parchment base */
+  background-image: radial-gradient(circle, #f7f3e8 20%, #d8c295 100%); /* Paper lighting vignette */
   overflow: hidden;
   cursor: grab;
 }
@@ -123,6 +124,13 @@ body {
   height: 100%;
   display: block;
   user-select: none;
+}
+
+/* Blend the plan image with the paper background */
+#svg-canvas image {
+  mix-blend-mode: multiply;
+  opacity: 0.92;
+  filter: contrast(1.1) brightness(1.02); /* Make pen lines pop slightly */
 }
 
 /* Premium Floating HUD Title (Top-Left) */
