@@ -126,6 +126,28 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
+  // Central Glade decoration
+  const gladeGroup = s.group().addClass('glade-decoration');
+  gladeGroup.add(s.ellipse(420, 780, 160, 170).attr({
+    fill: 'var(--color-garden)',
+    fillOpacity: 0.04,
+    stroke: 'var(--ink-color)',
+    strokeWidth: 0.6,
+    strokeDasharray: '4 4',
+    strokeOpacity: 0.45
+  }));
+  gladeGroup.add(s.text(420, 783, 'ЦЕНТРАЛЬНАЯ ПОЛЯНА').attr({
+    fontFamily: 'var(--font-body)',
+    fontSize: '8px',
+    fontStyle: 'italic',
+    fontWeight: 'bold',
+    textAnchor: 'middle',
+    fill: 'var(--ink-muted)',
+    letterSpacing: '2px',
+    opacity: 0.65
+  }));
+  interactiveGroup.add(gladeGroup);
+
   // Select an Object
   function selectObject(id, element) {
     const data = objectsData[id];
@@ -406,24 +428,24 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   const plantsData = {
-    'T1': { id: 'Т1', level: 4, name: 'Guava Kristal', botName: "Psidium guajava 'Kristal'", desc: 'Crispy, sweet, seedless guava variety. Medium size tree.', x: 200, y: 600, color: '#a3b18a', style: 'cloud' },
-    'T2': { id: 'Т2', level: 4, name: "Sapodilla 'Ciku Mega'", botName: 'Manilkara zapota', desc: 'Large, sweet fruit with few large seeds. Rich caramel taste.', x: 320, y: 600, color: '#ddb892', style: 'pinwheel' },
-    'T3': { id: 'Т3', level: 4, name: "Sapodilla 'Sawo Kecil'", botName: 'Manilkara zapota', desc: 'Highly decorative tree, sweet pear-like small fruits.', x: 440, y: 600, color: '#b7b7a4', style: 'pinwheel' },
-    'T4': { id: 'Т4', level: 4, name: 'Litchi', botName: 'Litchi chinensis', desc: 'Sweet Kom variety, thrives in light night coolness at 400m.', x: 560, y: 600, color: '#f28482', style: 'cloud' },
-    'T5': { id: 'Т5', level: 4, name: "Longan 'Pingpong'", botName: 'Dimocarpus longan', desc: 'Pingpong variety with large sweet fruits. Needs night cool.', x: 260, y: 750, color: '#e07a5f', style: 'cloud' },
-    'T6': { id: 'Т6', level: 4, name: 'Matoa', botName: 'Pometia pinnata', desc: 'Indonesian native, fruit tastes like rambutan, litchi and longan.', x: 380, y: 750, color: '#f4a261', style: 'ring' },
-    'T7': { id: 'Т7', level: 4, name: 'Jaboticaba', botName: 'Plinia cauliflora', desc: 'Brazilian grape. Sweet grape-like fruits grow directly on trunk.', x: 500, y: 750, color: '#5c4d7d', style: 'ring' },
-    'T8': { id: 'Т8', level: 4, name: "Tropical Plum 'Gondorio'", botName: "Bouea macrophylla 'Manis'", desc: 'Sweet Gondorio/Maprang. Flavor is mango-plum hybrid.', x: 620, y: 750, color: '#f4e285', style: 'spiky' },
-    'T9': { id: 'Т9', level: 4, name: "Tropical Plum 'Gondorio'", botName: "Bouea macrophylla 'Manis'", desc: 'Sweet Gondorio/Maprang. Flavor is mango-plum hybrid.', x: 200, y: 900, color: '#f4e285', style: 'spiky' },
-    'T10': { id: 'Т10', level: 4, name: 'Macadamia', botName: 'Macadamia integrifolia', desc: 'Slow growing nut tree, beautiful thornless foliage.', x: 320, y: 900, color: '#4f772d', style: 'spiky' },
-    'T11': { id: 'Т11', level: 4, name: 'Macadamia', botName: 'Macadamia integrifolia', desc: 'Slow growing nut tree, beautiful thornless foliage.', x: 440, y: 900, color: '#4f772d', style: 'spiky' },
-    'T12': { id: 'Т12', level: 4, name: 'White Sapodilla (Caimito)', botName: 'Chrysophyllum caimito', desc: 'Star apple, sweet jelly-like fruit, golden under-leaves.', x: 560, y: 900, color: '#d8f3dc', style: 'pinwheel' },
-    'S1': { id: 'Я3-А', level: 3, name: 'Strawberry Guava', botName: 'Psidium cattleianum', desc: 'Compact thornless bush, dark red sweet strawberry fruits.', x: 260, y: 675, color: '#d90429' },
-    'S2': { id: 'Я3-А', level: 3, name: 'Strawberry Guava', botName: 'Psidium cattleianum', desc: 'Compact thornless bush, dark red sweet strawberry fruits.', x: 500, y: 675, color: '#d90429' },
-    'S3': { id: 'Я3-Б', level: 3, name: 'Barbados Cherry (Sweet)', botName: 'Malpighia emarginata', desc: 'Rich in Vitamin C, selected sweet variety, tidy bush.', x: 200, y: 825, color: '#ffb703' },
-    'S4': { id: 'Я3-Б', level: 3, name: 'Barbados Cherry (Sweet)', botName: 'Malpighia emarginata', desc: 'Rich in Vitamin C, selected sweet variety, tidy bush.', x: 440, y: 825, color: '#ffb703' },
-    'S5': { id: 'Я3-В', level: 3, name: 'Dwarf Sweet Mulberry', botName: "Morus alba 'Dwarf'", desc: 'Grows only 1.5-2m tall, very sweet black/white berries.', x: 320, y: 825, color: '#3d348b' },
-    'S6': { id: 'Я3-В', level: 3, name: 'Dwarf Sweet Mulberry', botName: "Morus alba 'Dwarf'", desc: 'Grows only 1.5-2m tall, very sweet black/white berries.', x: 560, y: 825, color: '#3d348b' },
+    'T1': { id: 'Т1', level: 4, name: 'Guava Kristal', botName: "Psidium guajava 'Kristal'", desc: 'Crispy, sweet, seedless guava variety. Medium size tree.', x: 200, y: 570, color: '#a3b18a', style: 'cloud' },
+    'T2': { id: 'Т2', level: 4, name: "Sapodilla 'Ciku Mega'", botName: 'Manilkara zapota', desc: 'Large, sweet fruit with few large seeds. Rich caramel taste.', x: 310, y: 570, color: '#ddb892', style: 'pinwheel' },
+    'T3': { id: 'Т3', level: 4, name: "Sapodilla 'Sawo Kecil'", botName: 'Manilkara zapota', desc: 'Highly decorative tree, sweet pear-like small fruits.', x: 530, y: 570, color: '#b7b7a4', style: 'pinwheel' },
+    'T4': { id: 'Т4', level: 4, name: 'Litchi', botName: 'Litchi chinensis', desc: 'Sweet Kom variety, thrives in light night coolness at 400m.', x: 640, y: 570, color: '#f28482', style: 'cloud' },
+    'T5': { id: 'Т5', level: 4, name: "Longan 'Pingpong'", botName: 'Dimocarpus longan', desc: 'Pingpong variety with large sweet fruits. Needs night cool.', x: 200, y: 720, color: '#e07a5f', style: 'cloud' },
+    'T6': { id: 'Т6', level: 4, name: 'Matoa', botName: 'Pometia pinnata', desc: 'Indonesian native, fruit tastes like rambutan, litchi and longan.', x: 200, y: 1020, color: '#f4a261', style: 'ring' },
+    'T7': { id: 'Т7', level: 4, name: 'Jaboticaba', botName: 'Plinia cauliflora', desc: 'Brazilian grape. Sweet grape-like fruits grow directly on trunk.', x: 380, y: 1020, color: '#5c4d7d', style: 'ring' },
+    'T8': { id: 'Т8', level: 4, name: "Tropical Plum 'Gondorio'", botName: "Bouea macrophylla 'Manis'", desc: 'Sweet Gondorio/Maprang. Flavor is mango-plum hybrid.', x: 640, y: 720, color: '#f4e285', style: 'spiky' },
+    'T9': { id: 'Т9', level: 4, name: "Tropical Plum 'Gondorio'", botName: "Bouea macrophylla 'Manis'", desc: 'Sweet Gondorio/Maprang. Flavor is mango-plum hybrid.', x: 200, y: 820, color: '#f4e285', style: 'spiky' },
+    'T10': { id: 'Т10', level: 4, name: 'Macadamia', botName: 'Macadamia integrifolia', desc: 'Slow growing nut tree, beautiful thornless foliage.', x: 470, y: 1020, color: '#4f772d', style: 'spiky' },
+    'T11': { id: 'Т11', level: 4, name: 'Macadamia', botName: 'Macadamia integrifolia', desc: 'Slow growing nut tree, beautiful thornless foliage.', x: 640, y: 1020, color: '#4f772d', style: 'spiky' },
+    'T12': { id: 'Т12', level: 4, name: 'White Sapodilla (Caimito)', botName: 'Chrysophyllum caimito', desc: 'Star apple, sweet jelly-like fruit, golden under-leaves.', x: 640, y: 820, color: '#d8f3dc', style: 'pinwheel' },
+    'S1': { id: 'Я3-А', level: 3, name: 'Strawberry Guava', botName: 'Psidium cattleianum', desc: 'Compact thornless bush, dark red sweet strawberry fruits.', x: 220, y: 640, color: '#d90429' },
+    'S2': { id: 'Я3-А', level: 3, name: 'Strawberry Guava', botName: 'Psidium cattleianum', desc: 'Compact thornless bush, dark red sweet strawberry fruits.', x: 620, y: 640, color: '#d90429' },
+    'S3': { id: 'Я3-Б', level: 3, name: 'Barbados Cherry (Sweet)', botName: 'Malpighia emarginata', desc: 'Rich in Vitamin C, selected sweet variety, tidy bush.', x: 200, y: 920, color: '#ffb703' },
+    'S4': { id: 'Я3-Б', level: 3, name: 'Barbados Cherry (Sweet)', botName: 'Malpighia emarginata', desc: 'Rich in Vitamin C, selected sweet variety, tidy bush.', x: 640, y: 920, color: '#ffb703' },
+    'S5': { id: 'Я3-В', level: 3, name: 'Dwarf Sweet Mulberry', botName: "Morus alba 'Dwarf'", desc: 'Grows only 1.5-2m tall, very sweet black/white berries.', x: 290, y: 1020, color: '#3d348b' },
+    'S6': { id: 'Я3-В', level: 3, name: 'Dwarf Sweet Mulberry', botName: "Morus alba 'Dwarf'", desc: 'Grows only 1.5-2m tall, very sweet black/white berries.', x: 560, y: 1020, color: '#3d348b' },
     'F1': { id: 'Я2-А', level: 2, name: 'Pentas lanceolata', botName: 'Pentas lanceolata', desc: 'Attracts butterflies, compact non-toxic bushes, blooms all year.', x: 450, y: 535, color: '#ff4d6d' },
     'F2': { id: 'Я2-Б', level: 2, name: 'Verbena bonariensis', botName: 'Verbena bonariensis', desc: 'Tall airy purple flowers, butterfly favorite.', x: 570, y: 535, color: '#b5179e' },
     'F3': { id: 'Я2-В', level: 2, name: 'Cosmos (Yellow/Pink)', botName: 'Cosmos sulphureus', desc: 'Easy self-seeding, zero-maintenance bright carpet.', x: 490, y: 570, color: '#ffb703' },
@@ -641,8 +663,12 @@ document.addEventListener('DOMContentLoaded', () => {
     { x: 280, y: 300, type: 'arachis', name: 'Arachis pintoi (Kacang-kacangan)', id: 'Я1-А', desc: 'Creeping wild peanut. Fixes nitrogen, has beautiful yellow flowers, chokes weeds. No mowing needed.', color: '#ffb703' },
     { x: 250, y: 450, type: 'lippia', name: 'Phyla nodiflora (Lippia)', id: 'Я1-Б', desc: 'Groundcover substitute for lawn, handles light traffic. White-pink flowers attract butterflies.', color: '#f28482' },
     { x: 300, y: 550, type: 'arachis', name: 'Arachis pintoi (Kacang-kacangan)', id: 'Я1-А', desc: 'Creeping wild peanut. Fixes nitrogen, has beautiful yellow flowers, chokes weeds. No mowing needed.', color: '#ffb703' },
-    { x: 400, y: 830, type: 'arachis', name: 'Arachis pintoi (Kacang-kacangan)', id: 'Я1-А', desc: 'Creeping wild peanut. Fixes nitrogen, has beautiful yellow flowers, chokes weeds. No mowing needed.', color: '#ffb703' },
-    { x: 480, y: 950, type: 'lippia', name: 'Phyla nodiflora (Lippia)', id: 'Я1-Б', desc: 'Groundcover substitute for lawn, handles light traffic. White-pink flowers attract butterflies.', color: '#f28482' }
+    { x: 350, y: 720, type: 'lippia', name: 'Phyla nodiflora (Lippia)', id: 'Я1-Б', desc: 'Groundcover substitute for lawn, handles light traffic. White-pink flowers attract butterflies.', color: '#f28482' },
+    { x: 490, y: 740, type: 'arachis', name: 'Arachis pintoi (Kacang-kacangan)', id: 'Я1-А', desc: 'Creeping wild peanut. Fixes nitrogen, has beautiful yellow flowers, chokes weeds. No mowing needed.', color: '#ffb703' },
+    { x: 420, y: 830, type: 'arachis', name: 'Arachis pintoi (Kacang-kacangan)', id: 'Я1-А', desc: 'Creeping wild peanut. Fixes nitrogen, has beautiful yellow flowers, chokes weeds. No mowing needed.', color: '#ffb703' },
+    { x: 380, y: 920, type: 'lippia', name: 'Phyla nodiflora (Lippia)', id: 'Я1-Б', desc: 'Groundcover substitute for lawn, handles light traffic. White-pink flowers attract butterflies.', color: '#f28482' },
+    { x: 480, y: 960, type: 'lippia', name: 'Phyla nodiflora (Lippia)', id: 'Я1-Б', desc: 'Groundcover substitute for lawn, handles light traffic. White-pink flowers attract butterflies.', color: '#f28482' },
+    { x: 420, y: 1060, type: 'arachis', name: 'Arachis pintoi (Kacang-kacangan)', id: 'Я1-А', desc: 'Creeping wild peanut. Fixes nitrogen, has beautiful yellow flowers, chokes weeds. No mowing needed.', color: '#ffb703' }
   ];
   
   groundcoverPositions.forEach((gc, idx) => {
