@@ -31,17 +31,17 @@ document.addEventListener('DOMContentLoaded', () => {
   // Define objects and their coordinates based on user sketch
   const objectsData = {
     'main-house': {
-      title: 'Главный дом (HOUSE)',
+      title: 'Main House (HOUSE)',
       category: 'residential',
       points: [420, 380, 560, 380, 560, 1100, 420, 1100]
     },
     'parking': {
-      title: 'Парковка (PARKING)',
+      title: 'Parking Area (PARKING)',
       category: 'utility',
       points: [560, 500, 680, 500, 680, 1100, 560, 1100]
     },
     'garden': {
-      title: 'Свободная территория / Сад',
+      title: 'Free Territory / Garden',
       category: 'garden',
       points: [150, 200, 690, 200, 690, 500, 560, 500, 560, 380, 420, 380, 420, 1100, 150, 1100]
     }
