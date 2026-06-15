@@ -1,60 +1,75 @@
-/* CSS Variable Design System */
+/* Modern Premium Cyber-HUD Design System */
 :root {
-  /* Dark Theme Palette (Default) */
-  --bg-primary: #0a0e17;
-  --bg-secondary: #121824;
-  --bg-tertiary: #1b2336;
+  /* Fonts */
+  --font-display: 'Syne', sans-serif;
+  --font-body: 'Outfit', sans-serif;
+
+  /* Dark Theme Colors (Default) */
+  --bg-primary: #030712;
+  --bg-secondary: #090d16;
+  --bg-tertiary: #0e1424;
   
   --text-primary: #f3f4f6;
   --text-secondary: #9ca3af;
-  --text-muted: #6b7280;
+  --text-muted: #4b5563;
   
-  --border-color: #242f47;
-  --border-hover: #3b4d73;
+  --border-color: rgba(59, 130, 246, 0.12);
+  --border-hover: rgba(59, 130, 246, 0.3);
   
   --accent-color: #3b82f6;
-  --accent-hover: #2563eb;
-  --accent-light: rgba(59, 130, 246, 0.15);
+  --accent-glow: rgba(59, 130, 246, 0.4);
   
-  /* Category Colors */
-  --color-residential: #22d3ee;
-  --color-garden: #34d399;
-  --color-utility: #a78bfa;
+  /* Neon Accents with Gradients */
+  --color-residential: #06b6d4;
+  --color-residential-glow: rgba(6, 182, 212, 0.4);
+  --gradient-residential: linear-gradient(135deg, #06b6d4, #3b82f6);
   
-  /* Shadow & Glass */
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-  --glass-bg: rgba(18, 24, 36, 0.75);
-  --glass-blur: blur(12px);
-  --glass-border: rgba(255, 255, 255, 0.05);
+  --color-garden: #10b981;
+  --color-garden-glow: rgba(16, 185, 129, 0.4);
+  --gradient-garden: linear-gradient(135deg, #10b981, #34d399);
   
-  --border-radius: 12px;
-  --transition-speed: 0.3s;
+  --color-utility: #8b5cf6;
+  --color-utility-glow: rgba(139, 92, 246, 0.4);
+  --gradient-utility: linear-gradient(135deg, #8b5cf6, #6366f1);
+  
+  /* Glassmorphic settings */
+  --glass-bg: rgba(9, 13, 22, 0.65);
+  --glass-blur: blur(16px);
+  --glass-border: rgba(255, 255, 255, 0.04);
+  
+  --shadow-lg: 0 12px 30px -10px rgba(0, 0, 0, 0.6), 0 0 15px rgba(59, 130, 246, 0.05);
+  --border-radius: 16px;
+  --transition-speed: 0.4s;
 }
 
-/* Light Theme overrides */
+/* Light Theme overrides (Clean minimalistic futuristic light mode) */
 body.light-theme {
-  --bg-primary: #f8fafc;
+  --bg-primary: #f0f2f5;
   --bg-secondary: #ffffff;
-  --bg-tertiary: #f1f5f9;
+  --bg-tertiary: #e4e7eb;
   
   --text-primary: #0f172a;
   --text-secondary: #475569;
   --text-muted: #94a3b8;
   
-  --border-color: #e2e8f0;
-  --border-hover: #cbd5e1;
+  --border-color: rgba(37, 99, 235, 0.1);
+  --border-hover: rgba(37, 99, 235, 0.25);
   
   --accent-color: #2563eb;
-  --accent-hover: #1d4ed8;
-  --accent-light: rgba(37, 99, 235, 0.1);
+  --accent-glow: rgba(37, 99, 235, 0.2);
   
   --color-residential: #0891b2;
-  --color-garden: #16a34a;
-  --color-utility: #7c3aed;
+  --color-residential-glow: rgba(8, 145, 178, 0.2);
   
-  --glass-bg: rgba(255, 255, 255, 0.8);
-  --glass-border: rgba(0, 0, 0, 0.05);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.02);
+  --color-garden: #059669;
+  --color-garden-glow: rgba(5, 150, 105, 0.2);
+  
+  --color-utility: #7c3aed;
+  --color-utility-glow: rgba(124, 58, 237, 0.2);
+  
+  --glass-bg: rgba(255, 255, 255, 0.75);
+  --glass-border: rgba(0, 0, 0, 0.04);
+  --shadow-lg: 0 12px 30px -10px rgba(0, 0, 0, 0.05), 0 0 15px rgba(37, 99, 235, 0.02);
 }
 
 /* Reset and Core Styles */
@@ -65,13 +80,14 @@ body.light-theme {
 }
 
 body {
-  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-family: var(--font-body);
   background-color: var(--bg-primary);
   color: var(--text-primary);
   height: 100vh;
   width: 100vw;
   overflow: hidden;
-  transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease;
+  transition: background-color var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1), 
+              color var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .app-container {
@@ -86,14 +102,14 @@ body {
   position: relative;
 }
 
-/* Canvas Area takes 100% of viewport */
+/* Fullscreen Map Canvas */
 .canvas-container {
   width: 100%;
   height: 100%;
   position: absolute;
   top: 0;
   left: 0;
-  background-color: var(--bg-tertiary);
+  background-color: var(--bg-primary);
   overflow: hidden;
   cursor: grab;
 }
@@ -109,11 +125,65 @@ body {
   user-select: none;
 }
 
-/* Floating Toolbar on the Right */
+/* Premium Floating HUD Title (Top-Left) */
+.map-title-floating {
+  position: absolute;
+  top: 24px;
+  left: 24px;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.hud-title-wrapper {
+  position: relative;
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  padding: 12px 24px 12px 42px;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-lg);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  overflow: hidden;
+}
+
+/* Sci-fi scanner bar effect */
+.hud-scanner-line {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 4px;
+  height: 100%;
+  background: var(--gradient-residential);
+  box-shadow: 0 0 10px var(--color-residential);
+}
+
+.title-leaf-icon {
+  position: absolute;
+  left: 16px;
+  font-size: 16px;
+  color: var(--color-garden);
+  filter: drop-shadow(0 0 5px var(--color-garden));
+  animation: leafPulse 3s ease-in-out infinite;
+}
+
+.map-title-floating h1 {
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 800;
+  letter-spacing: 3px;
+  background: linear-gradient(90deg, var(--text-primary), var(--text-secondary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin: 0;
+}
+
+/* Floating Toolbar (Top-Right) */
 .map-toolbar-floating {
   position: absolute;
-  top: 20px;
-  right: 20px;
+  top: 24px;
+  right: 24px;
   z-index: 10;
   display: flex;
   align-items: center;
@@ -124,26 +194,32 @@ body {
   border-radius: var(--border-radius);
   border: 1px solid var(--glass-border);
   box-shadow: var(--shadow-lg);
+  transition: all var(--transition-speed) ease;
 }
 
 .btn-tool {
   background: transparent;
   border: none;
   color: var(--text-secondary);
-  width: 36px;
-  height: 36px;
-  border-radius: 8px;
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 15px;
-  transition: all 0.2s ease;
+  font-size: 14px;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .btn-tool:hover {
   background: var(--border-color);
   color: var(--text-primary);
+  transform: scale(1.05);
+}
+
+.btn-tool:active {
+  transform: scale(0.95);
 }
 
 .map-toolbar-floating .divider {
@@ -153,88 +229,129 @@ body {
   margin: 0 4px;
 }
 
-/* Floating Title in the Top-Left */
-.map-title-floating {
-  position: absolute;
-  top: 20px;
-  left: 20px;
-  z-index: 10;
-  pointer-events: none; /* Let click events pass to SVG canvas */
-}
-
-.map-title-floating h1 {
-  font-size: 18px;
-  font-weight: 800;
-  letter-spacing: 1.5px;
-  color: var(--text-primary);
-  background: var(--glass-bg);
-  backdrop-filter: var(--glass-blur);
-  border: 1px solid var(--glass-border);
-  padding: 8px 16px;
-  border-radius: var(--border-radius);
-  box-shadow: var(--shadow-lg);
-  display: inline-block;
-}
-
-/* Floating Legend on the Left */
+/* Floating HUD Legend (Bottom-Left) */
 .plan-legend-floating {
   position: absolute;
-  bottom: 20px;
-  left: 20px;
+  bottom: 24px;
+  left: 24px;
   z-index: 10;
   background: var(--glass-bg);
   backdrop-filter: var(--glass-blur);
   border: 1px solid var(--glass-border);
-  padding: 16px;
+  padding: 20px;
   border-radius: var(--border-radius);
   box-shadow: var(--shadow-lg);
-  width: 260px;
+  width: 290px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  pointer-events: auto; /* Prevent click-through to SVG pan */
-  transition: background-color var(--transition-speed) ease, border-color var(--transition-speed) ease;
+  gap: 16px;
+  pointer-events: auto;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.plan-legend-floating:hover {
+  border-color: var(--border-hover);
+  box-shadow: 0 15px 35px -10px rgba(0, 0, 0, 0.7), 0 0 20px rgba(59, 130, 246, 0.1);
+}
+
+.legend-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 10px;
+}
+
+.legend-hud-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-residential);
+  box-shadow: 0 0 8px var(--color-residential);
+  animation: hudPulse 2s infinite;
 }
 
 .legend-header h3 {
+  font-family: var(--font-display);
   font-size: 11px;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
-  color: var(--text-muted);
+  letter-spacing: 1.5px;
+  color: var(--text-secondary);
 }
 
 .legend-items {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 14px;
 }
 
 .legend-item {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 16px;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 8px;
+  transition: background-color 0.2s ease, transform 0.2s ease;
 }
 
-.legend-color {
+.legend-item:hover {
+  background: rgba(255, 255, 255, 0.02);
+  transform: translateX(4px);
+}
+
+.legend-color-wrapper {
+  position: relative;
   width: 16px;
   height: 16px;
-  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   flex-shrink: 0;
 }
 
-.legend-color.residential { background-color: var(--color-residential); }
-.legend-color.garden { background-color: var(--color-garden); }
-.legend-color.utility { background-color: var(--color-utility); }
+.legend-color {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  z-index: 2;
+  box-shadow: 0 0 6px rgba(0,0,0,0.3);
+}
+
+.legend-color-pulse {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  opacity: 0.4;
+  animation: radarRing 2s infinite;
+}
+
+/* Theme color mappings */
+.legend-color.residential { background: var(--gradient-residential); }
+.legend-color-pulse.residential { background: var(--color-residential); animation-delay: 0s; }
+
+.legend-color.garden { background: var(--gradient-garden); }
+.legend-color-pulse.garden { background: var(--color-garden); animation-delay: 0.5s; }
+
+.legend-color.utility { background: var(--gradient-utility); }
+.legend-color-pulse.utility { background: var(--color-utility); animation-delay: 1s; }
 
 .legend-text {
   display: flex;
   flex-direction: column;
+  gap: 2px;
 }
 
 .legend-text strong {
   font-size: 12px;
-  font-weight: 700;
+  font-weight: 600;
   color: var(--text-primary);
+  transition: color 0.2s ease;
+}
+
+.legend-item:hover .legend-text strong {
+  color: var(--accent-color);
 }
 
 .legend-text span {
@@ -242,28 +359,62 @@ body {
   color: var(--text-secondary);
 }
 
-/* SVG Interactive Styling */
+/* SVG Cyber-Interactive Styling */
 .plot-polygon {
   cursor: pointer;
-  transition: fill 0.3s ease, fill-opacity 0.3s ease, stroke-width 0.2s ease, stroke 0.2s ease;
+  fill-opacity: 0.12;
+  transition: fill-opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1), 
+              stroke-width 0.3s cubic-bezier(0.4, 0, 0.2, 1), 
+              stroke 0.3s ease, 
+              filter 0.3s ease;
 }
 
 .plot-polygon:hover {
-  stroke-width: 3px;
-  fill-opacity: 0.4;
-  filter: drop-shadow(0px 0px 8px var(--hover-glow, rgba(59, 130, 246, 0.5)));
+  fill-opacity: 0.32;
+  stroke-width: 3.5px;
+  filter: drop-shadow(0px 0px 10px var(--hover-glow));
 }
 
 .plot-polygon.active {
+  fill-opacity: 0.45 !important;
   stroke-width: 4px !important;
-  fill-opacity: 0.5 !important;
+  stroke-dasharray: none !important;
+  filter: drop-shadow(0px 0px 15px var(--hover-glow)) !important;
+}
+
+/* Animations */
+@keyframes leafPulse {
+  0% { transform: scale(1); filter: drop-shadow(0 0 3px var(--color-garden)); }
+  50% { transform: scale(1.15); filter: drop-shadow(0 0 8px var(--color-garden)); }
+  100% { transform: scale(1); filter: drop-shadow(0 0 3px var(--color-garden)); }
+}
+
+@keyframes hudPulse {
+  0% { opacity: 0.5; }
+  50% { opacity: 1; }
+  100% { opacity: 0.5; }
+}
+
+@keyframes radarRing {
+  0% { transform: scale(0.6); opacity: 0.8; }
+  100% { transform: scale(1.6); opacity: 0; }
 }
 
 /* Responsive adjustments */
 @media (max-width: 576px) {
   .plan-legend-floating {
-    width: calc(100% - 40px);
-    bottom: 20px;
-    left: 20px;
+    width: calc(100% - 48px);
+    bottom: 24px;
+    left: 24px;
+  }
+  
+  .map-title-floating {
+    top: 16px;
+    left: 16px;
+  }
+  
+  .map-toolbar-floating {
+    top: 16px;
+    right: 16px;
   }
 }

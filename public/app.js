@@ -57,6 +57,9 @@ document.addEventListener('DOMContentLoaded', () => {
     utility: { fill: 'var(--color-utility)', stroke: 'var(--color-utility)' }
   };
 
+  // Store polygon elements for selection via legend
+  const polygonElements = {};
+
   // Draw Polygons
   Object.keys(objectsData).forEach(id => {
     const data = objectsData[id];
@@ -101,6 +104,19 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     interactiveGroup.add(poly);
+    polygonElements[id] = poly;
+  });
+
+  // Bind clicks on legend items to map polygons
+  document.querySelectorAll('.legend-item').forEach(item => {
+    item.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const targetId = item.getAttribute('data-target');
+      const poly = polygonElements[targetId];
+      if (poly) {
+        selectObject(targetId, poly);
+      }
+    });
   });
 
   // Select an Object

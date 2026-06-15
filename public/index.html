@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Интерактивный План Участка</title>
-  <!-- Google Fonts -->
+  <title>Hidden Garden — Интерактивный План</title>
+  <!-- Google Fonts: Syne (Ultra-modern Display) & Outfit (Geometric Body) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
   <!-- FontAwesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <!-- Custom CSS -->
@@ -25,45 +25,59 @@
         <!-- SVG will be loaded/injected here via Snap.svg -->
         <svg id="svg-canvas" width="100%" height="100%"></svg>
         
-        <!-- Floating Title in the Top-Left -->
+        <!-- Premium Floating HUD Title -->
         <div class="map-title-floating">
-          <h1>HIDDEN GARDEN</h1>
+          <div class="hud-title-wrapper">
+            <span class="hud-scanner-line"></span>
+            <i class="fa-solid fa-leaf title-leaf-icon"></i>
+            <h1>HIDDEN GARDEN</h1>
+          </div>
         </div>
 
         <!-- Floating Toolbar on the Right -->
         <div class="map-toolbar-floating">
-          <button id="btn-zoom-in" class="btn-tool" title="Приблизить"><i class="fa-solid fa-magnifying-glass-plus"></i></button>
-          <button id="btn-zoom-out" class="btn-tool" title="Отдалить"><i class="fa-solid fa-magnifying-glass-minus"></i></button>
-          <button id="btn-reset" class="btn-tool" title="Сбросить вид"><i class="fa-solid fa-arrows-to-dot"></i></button>
+          <button id="btn-zoom-in" class="btn-tool" title="Приблизить"><i class="fa-solid fa-plus"></i></button>
+          <button id="btn-zoom-out" class="btn-tool" title="Отдалить"><i class="fa-solid fa-minus"></i></button>
+          <button id="btn-reset" class="btn-tool" title="Сбросить вид"><i class="fa-solid fa-expand"></i></button>
           <div class="divider"></div>
-          <button id="theme-toggle" class="btn-tool" title="Переключить тему"><i class="fa-solid fa-moon"></i></button>
+          <button id="theme-toggle" class="btn-tool" title="Переключить тему"><i class="fa-solid fa-circle-half-stroke"></i></button>
         </div>
 
-        <!-- Floating Legend on the Left -->
+        <!-- Premium Floating Glassmorphic Legend on the Left -->
         <div class="plan-legend-floating">
           <div class="legend-header">
-            <h3>Легенда плана</h3>
+            <span class="legend-hud-dot"></span>
+            <h3>Система мониторинга</h3>
           </div>
           <div class="legend-items">
-            <div class="legend-item">
-              <span class="legend-color residential"></span>
+            <div class="legend-item" data-target="main-house">
+              <div class="legend-color-wrapper">
+                <span class="legend-color residential"></span>
+                <span class="legend-color-pulse residential"></span>
+              </div>
               <div class="legend-text">
                 <strong>Жилая зона (HOUSE)</strong>
-                <span>Жилой дом</span>
+                <span>Главный дом • 160 м²</span>
               </div>
             </div>
-            <div class="legend-item">
-              <span class="legend-color garden"></span>
+            <div class="legend-item" data-target="garden">
+              <div class="legend-color-wrapper">
+                <span class="legend-color garden"></span>
+                <span class="legend-color-pulse garden"></span>
+              </div>
               <div class="legend-text">
                 <strong>Сад / Огород</strong>
-                <span>Свободная территория</span>
+                <span>Озеленение • 480 м²</span>
               </div>
             </div>
-            <div class="legend-item">
-              <span class="legend-color utility"></span>
+            <div class="legend-item" data-target="parking">
+              <div class="legend-color-wrapper">
+                <span class="legend-color utility"></span>
+                <span class="legend-color-pulse utility"></span>
+              </div>
               <div class="legend-text">
-                <strong>Хоз. постройки (PARKING)</strong>
-                <span>Парковка</span>
+                <strong>Парковка (PARKING)</strong>
+                <span>Хоз. площадка • 72 м²</span>
               </div>
             </div>
           </div>
