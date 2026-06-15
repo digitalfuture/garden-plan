@@ -389,18 +389,31 @@ body {
   background: var(--glass-bg);
   backdrop-filter: var(--glass-blur);
   border: 1px solid var(--glass-border);
-  padding: 8px;
+  padding: 10px;
   border-radius: var(--border-radius);
   box-shadow: var(--shadow-lg);
   display: flex;
   align-items: center;
   justify-content: center;
-  pointer-events: none; /* Let drag events pass to SVG canvas */
-  transition: background-color var(--transition-speed) ease, border-color var(--transition-speed) ease;
+  pointer-events: auto; /* Interactive card component */
+  cursor: help;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.map-compass-floating:hover {
+  border-color: var(--border-hover);
+  box-shadow: 0 15px 35px -10px rgba(0, 0, 0, 0.7), 0 0 20px rgba(59, 130, 246, 0.1);
+  transform: translateY(-2px);
 }
 
 .map-compass-floating svg polygon {
   filter: drop-shadow(0 0 3px var(--color-residential));
+  transform-origin: 25px 16px;
+  transition: transform 0.3s ease;
+}
+
+.map-compass-floating:hover svg polygon {
+  transform: scale(1.15);
 }
 
 /* Responsive adjustments */
