@@ -19,143 +19,52 @@
 </head>
 <body class="dark-theme">
   <div class="app-container">
-    <!-- Header -->
-    <header class="app-header">
-      <div class="header-logo">
-        <i class="fa-solid fa-map-location-dot logo-icon"></i>
-        <div class="logo-text">
-          <h1>TerraSpace</h1>
-          <span>Интерактивный план участка</span>
+    <main class="app-body-centered">
+      <div class="plan-card-centered">
+        <div class="plan-card-header">
+          <div class="plan-title">
+            <i class="fa-solid fa-compass"></i>
+            <h2>Интерактивный план участка</h2>
+          </div>
+          <div class="map-toolbar">
+            <button id="btn-zoom-in" class="btn-tool" title="Приблизить"><i class="fa-solid fa-magnifying-glass-plus"></i></button>
+            <button id="btn-zoom-out" class="btn-tool" title="Отдалить"><i class="fa-solid fa-magnifying-glass-minus"></i></button>
+            <button id="btn-reset" class="btn-tool" title="Сбросить вид"><i class="fa-solid fa-arrows-to-dot"></i></button>
+            <div class="divider"></div>
+            <button id="theme-toggle" class="btn-tool" title="Переключить тему"><i class="fa-solid fa-moon"></i></button>
+          </div>
+        </div>
+        
+        <div class="canvas-container" id="canvas-container">
+          <!-- SVG will be loaded/injected here via Snap.svg -->
+          <svg id="svg-canvas" width="100%" height="100%"></svg>
         </div>
       </div>
-      <div class="header-controls">
-        <button id="theme-toggle" class="btn-icon" title="Переключить тему">
-          <i class="fa-solid fa-moon"></i>
-        </button>
-        <div class="status-indicator">
-          <span class="status-dot online"></span>
-          <span class="status-text">Система готова</span>
+      
+      <!-- Legend strictly below the plan -->
+      <div class="plan-legend-below">
+        <div class="legend-item">
+          <span class="legend-color residential"></span>
+          <div class="legend-text">
+            <strong>Жилая зона (HOUSE)</strong>
+            <span>Проектируемый двухэтажный жилой дом</span>
+          </div>
+        </div>
+        <div class="legend-item">
+          <span class="legend-color garden"></span>
+          <div class="legend-text">
+            <strong>Сад / Огород</strong>
+            <span>Свободная территория под озеленение</span>
+          </div>
+        </div>
+        <div class="legend-item">
+          <span class="legend-color utility"></span>
+          <div class="legend-text">
+            <strong>Хоз. постройки (PARKING)</strong>
+            <span>Парковочная зона на 2-3 авто</span>
+          </div>
         </div>
       </div>
-    </header>
-
-    <!-- Main Workspace -->
-    <main class="app-body">
-      <!-- Plan Viewer Container -->
-      <section class="plan-section">
-        <div class="plan-card">
-          <div class="plan-card-header">
-            <div class="plan-title">
-              <i class="fa-solid fa-compass"></i>
-              <h2>Карта объекта</h2>
-            </div>
-            <div class="map-toolbar">
-              <button id="btn-zoom-in" class="btn-tool" title="Приблизить"><i class="fa-solid fa-magnifying-glass-plus"></i></button>
-              <button id="btn-zoom-out" class="btn-tool" title="Отдалить"><i class="fa-solid fa-magnifying-glass-minus"></i></button>
-              <button id="btn-reset" class="btn-tool" title="Сбросить вид"><i class="fa-solid fa-arrows-to-dot"></i></button>
-              <div class="divider"></div>
-              <button id="btn-layers" class="btn-tool" title="Слои"><i class="fa-solid fa-layer-group"></i></button>
-            </div>
-          </div>
-          
-          <div class="canvas-container" id="canvas-container">
-            <!-- SVG will be loaded/injected here via Snap.svg -->
-            <svg id="svg-canvas" width="100%" height="100%"></svg>
-            
-            <!-- Floating Map Legend -->
-            <div class="map-legend">
-              <h3>Легенда</h3>
-              <div class="legend-item"><span class="legend-color residential"></span> Жилая зона</div>
-              <div class="legend-item"><span class="legend-color garden"></span> Сад / Огород</div>
-              <div class="legend-item"><span class="legend-color recreation"></span> Зона отдыха</div>
-              <div class="legend-item"><span class="legend-color utility"></span> Хоз. постройки</div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Sidebar / Info Panel -->
-      <aside class="sidebar-section">
-        <!-- Object Detail Card -->
-        <div class="sidebar-card info-card" id="detail-card">
-          <div class="card-empty-state" id="empty-state">
-            <i class="fa-solid fa-hand-pointer empty-icon"></i>
-            <h3>Выберите объект на плане</h3>
-            <p>Нажмите на любое строение, участок или зону на интерактивной карте, чтобы увидеть подробную информацию, статус и параметры.</p>
-          </div>
-
-          <div class="card-content hidden" id="object-details">
-            <div class="details-header">
-              <span class="badge" id="obj-category">Категория</span>
-              <h3 id="obj-title">Название объекта</h3>
-              <p class="description" id="obj-description">Описание объекта...</p>
-            </div>
-
-            <div class="details-body">
-              <div class="detail-group">
-                <label>Площадь</label>
-                <div class="value" id="obj-area">0 кв.м.</div>
-              </div>
-              <div class="detail-group">
-                <label>Статус</label>
-                <div class="value status-badge" id="obj-status">В порядке</div>
-              </div>
-              <div class="detail-group">
-                <label>Материалы / Тип</label>
-                <div class="value" id="obj-type">Дерево, Кирпич</div>
-              </div>
-
-              <!-- Interactive Controls for selected object -->
-              <div class="object-actions">
-                <h4>Управление объектом</h4>
-                <div class="action-buttons">
-                  <button class="btn btn-primary" id="btn-action-edit">
-                    <i class="fa-solid fa-pen-to-square"></i> Изменить
-                  </button>
-                  <button class="btn btn-secondary" id="btn-action-toggle">
-                    <i class="fa-solid fa-lightbulb"></i> Вкл. подсветку
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Weather / Quick Stats Card -->
-        <div class="sidebar-card stats-card">
-          <h3>Параметры участка</h3>
-          <div class="stats-grid">
-            <div class="stat-item">
-              <i class="fa-solid fa-ruler-combined stat-icon text-primary"></i>
-              <div class="stat-info">
-                <span class="stat-label">Общая площадь</span>
-                <span class="stat-value">1200 м²</span>
-              </div>
-            </div>
-            <div class="stat-item">
-              <i class="fa-solid fa-temperature-half stat-icon text-warning"></i>
-              <div class="stat-info">
-                <span class="stat-label">Температура воздуха</span>
-                <span class="stat-value">+22°C</span>
-              </div>
-            </div>
-            <div class="stat-item">
-              <i class="fa-solid fa-droplet stat-icon text-info"></i>
-              <div class="stat-info">
-                <span class="stat-label">Влажность почвы</span>
-                <span class="stat-value">45%</span>
-              </div>
-            </div>
-            <div class="stat-item">
-              <i class="fa-solid fa-bolt stat-icon text-success"></i>
-              <div class="stat-info">
-                <span class="stat-label">Электросеть</span>
-                <span class="stat-value">Стабильно</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </aside>
     </main>
   </div>
 </body>
