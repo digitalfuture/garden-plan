@@ -21,7 +21,12 @@
   --color-garden: #34d399;
   --color-utility: #a78bfa;
   
+  /* Shadow & Glass */
   --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --glass-bg: rgba(18, 24, 36, 0.75);
+  --glass-blur: blur(12px);
+  --glass-border: rgba(255, 255, 255, 0.05);
+  
   --border-radius: 12px;
   --transition-speed: 0.3s;
 }
@@ -47,6 +52,8 @@ body.light-theme {
   --color-garden: #16a34a;
   --color-utility: #7c3aed;
   
+  --glass-bg: rgba(255, 255, 255, 0.8);
+  --glass-border: rgba(0, 0, 0, 0.05);
   --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.02);
 }
 
@@ -76,14 +83,16 @@ body {
 .app-body-full {
   width: 100%;
   height: 100%;
-  display: flex;
-  flex-direction: column;
+  position: relative;
 }
 
-/* Canvas Area taking full space */
+/* Canvas Area takes 100% of viewport */
 .canvas-container {
-  flex: 1;
-  position: relative;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
   background-color: var(--bg-tertiary);
   overflow: hidden;
   cursor: grab;
@@ -100,7 +109,7 @@ body {
   user-select: none;
 }
 
-/* Floating Toolbar on Canvas */
+/* Floating Toolbar on the Right */
 .map-toolbar-floating {
   position: absolute;
   top: 20px;
@@ -109,12 +118,12 @@ body {
   display: flex;
   align-items: center;
   gap: 6px;
-  background: var(--bg-secondary);
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
   padding: 6px;
   border-radius: var(--border-radius);
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--glass-border);
   box-shadow: var(--shadow-lg);
-  backdrop-filter: blur(8px);
 }
 
 .btn-tool {
@@ -144,31 +153,49 @@ body {
   margin: 0 4px;
 }
 
-/* Legend Bottom Bar */
-.plan-legend-below {
-  background: var(--bg-secondary);
-  border-top: 1px solid var(--border-color);
-  padding: 16px 40px;
+/* Floating Legend on the Left */
+.plan-legend-floating {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  z-index: 10;
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  padding: 16px;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-lg);
+  width: 260px;
   display: flex;
-  justify-content: space-around;
-  gap: 30px;
-  width: 100%;
-  z-index: 5;
+  flex-direction: column;
+  gap: 12px;
+  pointer-events: auto; /* Prevent click-through to SVG pan */
   transition: background-color var(--transition-speed) ease, border-color var(--transition-speed) ease;
+}
+
+.legend-header h3 {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-muted);
+}
+
+.legend-items {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .legend-item {
   display: flex;
   align-items: center;
-  gap: 16px;
-  flex: 1;
-  max-width: 320px;
+  gap: 12px;
 }
 
 .legend-color {
-  width: 20px;
-  height: 20px;
-  border-radius: 6px;
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
   flex-shrink: 0;
 }
 
@@ -179,17 +206,16 @@ body {
 .legend-text {
   display: flex;
   flex-direction: column;
-  gap: 2px;
 }
 
 .legend-text strong {
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 700;
   color: var(--text-primary);
 }
 
 .legend-text span {
-  font-size: 11px;
+  font-size: 10px;
   color: var(--text-secondary);
 }
 
@@ -211,14 +237,10 @@ body {
 }
 
 /* Responsive adjustments */
-@media (max-width: 768px) {
-  .plan-legend-below {
-    flex-direction: column;
-    gap: 14px;
-    padding: 16px 20px;
-  }
-  
-  .legend-item {
-    max-width: none;
+@media (max-width: 576px) {
+  .plan-legend-floating {
+    width: calc(100% - 40px);
+    bottom: 20px;
+    left: 20px;
   }
 }
