@@ -27,6 +27,9 @@
   --color-utility: #3a506b; /* Indigo wash */
   --color-utility-glow: rgba(58, 80, 107, 0.15);
   
+  --color-veranda: #c59b27; /* Antique Gold/Ochre wash */
+  --color-veranda-glow: rgba(197, 155, 39, 0.15);
+  
   /* Floating elements (Vintage labels/tabs) */
   --card-bg: rgba(247, 243, 235, 0.92);
   --card-border: #3c2c1e;
@@ -266,6 +269,7 @@ body {
 
 /* Antique watercolor zone colors */
 .legend-color.residential { background-color: var(--color-residential); }
+.legend-color.veranda { background-color: var(--color-veranda); }
 .legend-color.garden { background-color: var(--color-garden); }
 .legend-color.utility { background-color: var(--color-utility); }
 

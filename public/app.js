@@ -35,7 +35,12 @@ document.addEventListener('DOMContentLoaded', () => {
     'parking': {
       title: 'Parking Area (PARKING)',
       category: 'utility',
-      points: [420, 200, 690, 200, 690, 300, 420, 300]
+      points: [510, 200, 690, 200, 690, 300, 510, 300]
+    },
+    'veranda': {
+      title: 'Veranda (HOUSE PART)',
+      category: 'veranda',
+      points: [420, 200, 510, 200, 510, 300, 420, 300]
     },
     'main-house': {
       title: 'Main House (HOUSE)',
@@ -55,6 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Color configuration mapping
   const categoryStyles = {
     residential: { fill: 'var(--color-residential)', stroke: 'var(--color-residential)' },
+    veranda: { fill: 'var(--color-veranda)', stroke: 'var(--color-veranda)' },
     garden: { fill: 'var(--color-garden)', stroke: 'var(--color-garden)' },
     utility: { fill: 'var(--color-utility)', stroke: 'var(--color-utility)' }
   };
