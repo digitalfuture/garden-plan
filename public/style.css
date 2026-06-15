@@ -126,18 +126,7 @@ body {
   user-select: none;
 }
 
-/* Floating Paper Sheet Style */
-.paper-sheet {
-  fill: #f5eedc; /* Realistic warm cream paper */
-  filter: drop-shadow(0 15px 35px rgba(0, 0, 0, 0.45)); /* Shadows the paper to float */
-}
 
-/* Blend the plan image with the paper background */
-#svg-canvas image {
-  mix-blend-mode: multiply;
-  opacity: 0.92;
-  filter: contrast(1.1) brightness(1.02); /* Make pen lines pop slightly */
-}
 
 /* Premium Floating HUD Title (Top-Left) */
 .map-title-floating {

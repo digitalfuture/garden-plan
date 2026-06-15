@@ -25,11 +25,12 @@ document.addEventListener('DOMContentLoaded', () => {
     viewBox: `${viewBox.x} ${viewBox.y} ${viewBox.w} ${viewBox.h}`
   });
 
-  // Draw paper sheet background
-  const paperSheet = s.rect(0, 0, imgWidth, imgHeight).addClass('paper-sheet');
-
-  // Load Base Image
-  const baseImg = s.image('assets/base_plan.jpg', 0, 0, imgWidth, imgHeight);
+  // Draw digital plot boundary fence/border
+  const boundary = s.polygon([150, 200, 690, 200, 690, 1100, 150, 1100]).attr({
+    fill: 'none',
+    stroke: 'var(--border-color)',
+    strokeWidth: 3
+  });
   
   // Define objects and their coordinates based on user sketch
   const objectsData = {
