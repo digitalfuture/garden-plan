@@ -328,13 +328,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  const resetBtn = document.getElementById('btn-reset');
-  if (resetBtn) {
-    resetBtn.addEventListener('click', () => {
-      animateViewBox(0, 0, imgWidth, imgHeight);
-    });
-  }
-
   // ==========================================
   // PLANTING PLAN DATA AND RENDERING
   // ==========================================
