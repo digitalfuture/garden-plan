@@ -1,0 +1,4 @@
+{
+  "ignore": ["public/*", "docs/*"],
+  "watch": ["server.js"]
+}

@@ -1,0 +1,418 @@
+document.addEventListener('DOMContentLoaded', () => {
+  // SVG Canvas dimensions and panning state
+  const imgWidth = 841;
+  const imgHeight = 1280;
+  
+  let viewBox = { x: 0, y: 0, w: imgWidth, h: imgHeight };
+  let isPanning = false;
+  let startPoint = { x: 0, y: 0 };
+  let endPoint = { x: 0, y: 0 };
+  let activeElement = null;
+  
+  // Theme Toggle
+  const themeToggle = document.getElementById('theme-toggle');
+  themeToggle.addEventListener('click', () => {
+    document.body.classList.toggle('light-theme');
+    const isLight = document.body.classList.contains('light-theme');
+    themeToggle.innerHTML = isLight ? '<i class="fa-solid fa-sun"></i>' : '<i class="fa-solid fa-moon"></i>';
+  });
+
+  // Snap.svg instance
+  const s = Snap('#svg-canvas');
+  s.attr({
+    viewBox: `${viewBox.x} ${viewBox.y} ${viewBox.w} ${viewBox.h}`
+  });
+
+  // Load Base Image
+  const baseImg = s.image('assets/base_plan.jpg', 0, 0, imgWidth, imgHeight);
+  
+  // Define objects and their coordinates
+  const objectsData = {
+    'main-house': {
+      title: 'Главный дом',
+      category: 'residential',
+      categoryName: 'Жилая зона',
+      description: 'Двухэтажный загородный дом из клееного бруса с панорамными окнами и террасой. Установлена система умного дома.',
+      area: '250 кв.м.',
+      status: 'Норма',
+      statusClass: 'ok',
+      type: 'Жилое здание',
+      points: [180, 240, 410, 220, 430, 450, 200, 470]
+    },
+    'guest-house': {
+      title: 'Гостевой дом и Баня',
+      category: 'residential',
+      categoryName: 'Жилая зона',
+      description: 'Одноэтажный комплекс с баней на дровах, комнатой отдыха и гостевой спальней.',
+      area: '85 кв.м.',
+      status: 'Норма',
+      statusClass: 'ok',
+      type: 'Жилое здание / Банный комплекс',
+      points: [520, 210, 720, 190, 740, 360, 540, 380]
+    },
+    'garden': {
+      title: 'Плодовый сад и Теплицы',
+      category: 'garden',
+      categoryName: 'Сад / Огород',
+      description: 'Зона с плодовыми деревьями (яблони, груши, вишни), ягодными кустарниками и автоматизированными теплицами с автополивом.',
+      area: '300 кв.м.',
+      status: 'Требуется полив',
+      statusClass: 'warning',
+      type: 'Сельскохозяйственная зона',
+      points: [100, 600, 380, 580, 360, 920, 80, 900]
+    },
+    'bbq-area': {
+      title: 'Зона барбекю и Беседка',
+      category: 'recreation',
+      categoryName: 'Зона отдыха',
+      description: 'Крытая беседка со встроенным кирпичным мангалом, казаном, обеденным столом и зоной для шезлонгов.',
+      area: '60 кв.м.',
+      status: 'Норма',
+      statusClass: 'ok',
+      type: 'Благоустройство',
+      points: [480, 520, 700, 500, 720, 680, 500, 700]
+    },
+    'garage': {
+      title: 'Гараж на 2 авто',
+      category: 'utility',
+      categoryName: 'Хоз. постройки',
+      description: 'Капитальный гараж с автоматическими воротами, мастерской зоной и навесом для парковки гостей.',
+      area: '70 кв.м.',
+      status: 'Дверь открыта',
+      statusClass: 'danger',
+      type: 'Хозяйственная постройка',
+      points: [120, 1020, 340, 1000, 360, 1160, 140, 1180]
+    },
+    'playground': {
+      title: 'Детская площадка',
+      category: 'recreation',
+      categoryName: 'Зона отдыха',
+      description: 'Игровая зона с мягким резиновым покрытием, качелями, горкой и песочницей.',
+      area: '90 кв.м.',
+      status: 'Норма',
+      statusClass: 'ok',
+      type: 'Благоустройство',
+      points: [440, 780, 740, 760, 760, 980, 460, 1000]
+    }
+  };
+
+  // Group for interactive layers
+  const interactiveGroup = s.group().addClass('svg-interactive-group');
+  
+  // Color configuration mapping
+  const categoryStyles = {
+    residential: { fill: 'var(--color-residential)', stroke: 'var(--color-residential)' },
+    garden: { fill: 'var(--color-garden)', stroke: 'var(--color-garden)' },
+    recreation: { fill: 'var(--color-recreation)', stroke: 'var(--color-recreation)' },
+    utility: { fill: 'var(--color-utility)', stroke: 'var(--color-utility)' }
+  };
+
+  // Store polygon elements for manipulation
+  const polygonElements = {};
+
+  // Draw Polygons
+  Object.keys(objectsData).forEach(id => {
+    const data = objectsData[id];
+    const styles = categoryStyles[data.category];
+    
+    // Draw polygon using Snap
+    const poly = s.polygon(data.points).attr({
+      id: id,
+      fill: styles.fill,
+      fillOpacity: 0.15,
+      stroke: styles.stroke,
+      strokeWidth: 2,
+      strokeDasharray: '4 4'
+    }).addClass('plot-polygon');
+
+    // Add styles to polygon for interactive glow variable
+    poly.node.style.setProperty('--hover-glow', styles.fill);
+
+    // Hover effect
+    poly.mouseover(() => {
+      if (activeElement !== poly) {
+        poly.animate({
+          fillOpacity: 0.35,
+          strokeWidth: 3,
+        }, 150);
+      }
+    });
+
+    poly.mouseout(() => {
+      if (activeElement !== poly) {
+        poly.animate({
+          fillOpacity: 0.15,
+          strokeWidth: 2,
+        }, 150);
+      }
+    });
+
+    // Click effect (select)
+    poly.click((e) => {
+      e.stopPropagation();
+      selectObject(id, poly);
+    });
+
+    interactiveGroup.add(poly);
+    polygonElements[id] = poly;
+  });
+
+  // UI Elements for Sidebar
+  const emptyState = document.getElementById('empty-state');
+  const objectDetails = document.getElementById('object-details');
+  const objCategory = document.getElementById('obj-category');
+  const objTitle = document.getElementById('obj-title');
+  const objDescription = document.getElementById('obj-description');
+  const objArea = document.getElementById('obj-area');
+  const objStatus = document.getElementById('obj-status');
+  const objType = document.getElementById('obj-type');
+
+  // Select an Object
+  function selectObject(id, element) {
+    const data = objectsData[id];
+    if (!data) return;
+
+    // Reset previous active element
+    if (activeElement) {
+      const prevId = activeElement.attr('id');
+      const prevStyles = categoryStyles[objectsData[prevId].category];
+      activeElement.removeClass('active');
+      activeElement.animate({
+        fillOpacity: 0.15,
+        strokeWidth: 2,
+        strokeDasharray: '4 4'
+      }, 200);
+    }
+
+    // Set new active element
+    activeElement = element;
+    element.addClass('active');
+    element.animate({
+      fillOpacity: 0.45,
+      strokeWidth: 4,
+      strokeDasharray: 'none'
+    }, 200);
+
+    // Update Sidebar
+    objCategory.className = `badge ${data.category}`;
+    objCategory.textContent = data.categoryName;
+    objTitle.textContent = data.title;
+    objDescription.textContent = data.description;
+    objArea.textContent = data.area;
+    
+    // Status text & class
+    objStatus.className = `value status-badge ${data.statusClass}`;
+    objStatus.textContent = data.status;
+    
+    objType.textContent = data.type;
+
+    // Show Details
+    emptyState.classList.add('hidden');
+    objectDetails.classList.remove('hidden');
+
+    // Pan viewport to center the object slightly
+    centerOnObject(data.points);
+  }
+
+  // Deselect when clicking empty space on canvas
+  s.click(() => {
+    if (activeElement) {
+      const prevId = activeElement.attr('id');
+      const prevStyles = categoryStyles[objectsData[prevId].category];
+      activeElement.removeClass('active');
+      activeElement.animate({
+        fillOpacity: 0.15,
+        strokeWidth: 2,
+        strokeDasharray: '4 4'
+      }, 200);
+      activeElement = null;
+    }
+    
+    emptyState.classList.remove('hidden');
+    objectDetails.classList.add('hidden');
+  });
+
+  // Calculate center of polygon and adjust viewBox to focus on it
+  function centerOnObject(points) {
+    let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
+    for (let i = 0; i < points.length; i += 2) {
+      const x = points[i];
+      const y = points[i+1];
+      if (x < minX) minX = x;
+      if (x > maxX) maxX = x;
+      if (y < minY) minY = y;
+      if (y > maxY) maxY = y;
+    }
+
+    const objW = maxX - minX;
+    const objH = maxY - minY;
+    const centerX = minX + objW / 2;
+    const centerY = minY + objH / 2;
+
+    // Zoom level: make the object occupy about 40% of the screen
+    const targetW = Math.max(objW * 2.5, 300);
+    const targetH = targetW * (viewBox.h / viewBox.w); // Keep aspect ratio
+
+    const targetX = centerX - targetW / 2;
+    const targetY = centerY - targetH / 2;
+
+    animateViewBox(targetX, targetY, targetW, targetH);
+  }
+
+  // Smooth viewBox animation
+  function animateViewBox(targetX, targetY, targetW, targetH) {
+    // Clamp values to bounds
+    targetW = Math.max(100, Math.min(targetW, imgWidth * 1.5));
+    targetH = Math.max(100 * (imgHeight/imgWidth), Math.min(targetH, imgHeight * 1.5));
+    targetX = Math.max(-200, Math.min(targetX, imgWidth - 50));
+    targetY = Math.max(-200, Math.min(targetY, imgHeight - 50));
+
+    const steps = 20;
+    let currentStep = 0;
+    
+    const startX = viewBox.x;
+    const startY = viewBox.y;
+    const startW = viewBox.w;
+    const startH = viewBox.h;
+
+    const interval = setInterval(() => {
+      currentStep++;
+      const t = currentStep / steps;
+      // Ease out cubic
+      const ease = 1 - Math.pow(1 - t, 3);
+
+      viewBox.x = startX + (targetX - startX) * ease;
+      viewBox.y = startY + (targetY - startY) * ease;
+      viewBox.w = startW + (targetW - startW) * ease;
+      viewBox.h = startH + (targetH - startH) * ease;
+
+      s.attr({
+        viewBox: `${viewBox.x} ${viewBox.y} ${viewBox.w} ${viewBox.h}`
+      });
+
+      if (currentStep >= steps) {
+        clearInterval(interval);
+      }
+    }, 15);
+  }
+
+  // --- Pan and Zoom logic ---
+  const container = document.getElementById('canvas-container');
+
+  container.addEventListener('mousedown', (e) => {
+    // Only pan if we aren't clicking a UI element or button
+    if (e.target.tagName === 'button' || e.target.closest('button')) return;
+    
+    isPanning = true;
+    startPoint = { x: e.clientX, y: e.clientY };
+  });
+
+  window.addEventListener('mousemove', (e) => {
+    if (!isPanning) return;
+    
+    endPoint = { x: e.clientX, y: e.clientY };
+    const dx = endPoint.x - startPoint.x;
+    const dy = endPoint.y - startPoint.y;
+
+    // Convert screen pixel delta to SVG viewBox coordinate system delta
+    const scaleX = viewBox.w / container.clientWidth;
+    const scaleY = viewBox.h / container.clientHeight;
+
+    viewBox.x -= dx * scaleX;
+    viewBox.y -= dy * scaleY;
+
+    // Constrain panning bounds slightly
+    viewBox.x = Math.max(-imgWidth * 0.5, Math.min(viewBox.x, imgWidth * 1.5 - viewBox.w));
+    viewBox.y = Math.max(-imgHeight * 0.5, Math.min(viewBox.y, imgHeight * 1.5 - viewBox.h));
+
+    s.attr({
+      viewBox: `${viewBox.x} ${viewBox.y} ${viewBox.w} ${viewBox.h}`
+    });
+
+    startPoint = { x: e.clientX, y: e.clientY };
+  });
+
+  window.addEventListener('mouseup', () => {
+    isPanning = false;
+  });
+
+  // Wheel Zoom
+  container.addEventListener('wheel', (e) => {
+    e.preventDefault();
+
+    const zoomFactor = e.deltaY > 0 ? 1.1 : 0.9;
+    
+    // Zoom centered at mouse position
+    const rect = container.getBoundingClientRect();
+    const mouseX = e.clientX - rect.left;
+    const mouseY = e.clientY - rect.top;
+
+    // Mouse coordinates in SVG system
+    const svgMouseX = viewBox.x + mouseX * (viewBox.w / container.clientWidth);
+    const svgMouseY = viewBox.y + mouseY * (viewBox.h / container.clientHeight);
+
+    const newW = viewBox.w * zoomFactor;
+    const newH = viewBox.h * zoomFactor;
+
+    // Avoid zooming in/out too much
+    if (newW > 100 && newW < imgWidth * 2) {
+      viewBox.x = svgMouseX - mouseX * (newW / container.clientWidth);
+      viewBox.y = svgMouseY - mouseY * (newH / container.clientHeight);
+      viewBox.w = newW;
+      viewBox.h = newH;
+
+      s.attr({
+        viewBox: `${viewBox.x} ${viewBox.y} ${viewBox.w} ${viewBox.h}`
+      });
+    }
+  }, { passive: false });
+
+  // Toolbar Button Event Handlers
+  document.getElementById('btn-zoom-in').addEventListener('click', () => {
+    const targetW = viewBox.w * 0.75;
+    const targetH = viewBox.h * 0.75;
+    const targetX = viewBox.x + (viewBox.w - targetW) / 2;
+    const targetY = viewBox.y + (viewBox.h - targetH) / 2;
+    animateViewBox(targetX, targetY, targetW, targetH);
+  });
+
+  document.getElementById('btn-zoom-out').addEventListener('click', () => {
+    const targetW = viewBox.w * 1.33;
+    const targetH = viewBox.h * 1.33;
+    const targetX = viewBox.x + (viewBox.w - targetW) / 2;
+    const targetY = viewBox.y + (viewBox.h - targetH) / 2;
+    animateViewBox(targetX, targetY, targetW, targetH);
+  });
+
+  document.getElementById('btn-reset').addEventListener('click', () => {
+    animateViewBox(0, 0, imgWidth, imgHeight);
+  });
+
+  // Layer toggle demonstration
+  let layersVisible = true;
+  document.getElementById('btn-layers').addEventListener('click', (e) => {
+    layersVisible = !layersVisible;
+    interactiveGroup.animate({
+      opacity: layersVisible ? 1 : 0
+    }, 300);
+    
+    e.target.closest('button').classList.toggle('active', !layersVisible);
+  });
+
+  // Sidebar actions demo feedback
+  document.getElementById('btn-action-toggle').addEventListener('click', () => {
+    if (activeElement) {
+      const isHighlighted = activeElement.attr('fillOpacity') > 0.6;
+      activeElement.animate({
+        fillOpacity: isHighlighted ? 0.45 : 0.85
+      }, 300);
+    }
+  });
+
+  document.getElementById('btn-action-edit').addEventListener('click', () => {
+    if (activeElement) {
+      const data = objectsData[activeElement.attr('id')];
+      alert(`Редактирование объекта "${data.title}" (демо функция)`);
+    }
+  });
+});
