@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Hidden Garden — Interactive Site Plan</title>
-  <!-- Google Fonts: Syne (Ultra-modern Display) & Outfit (Geometric Body) -->
+  <title>Hidden Garden — Antique Site Plan</title>
+  <!-- Google Fonts: Cinzel (Classic Serif for Headers) & Playfair Display (Elegant Script/Body) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;800&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
   <!-- FontAwesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <!-- Custom CSS -->
@@ -25,12 +25,13 @@
         <!-- SVG will be loaded/injected here via Snap.svg -->
         <svg id="svg-canvas" width="100%" height="100%"></svg>
         
-        <!-- Premium Floating HUD Title -->
+        <!-- Elegant Vintage Cartographer Title -->
         <div class="map-title-floating">
-          <div class="hud-title-wrapper">
-            <span class="hud-scanner-line"></span>
-            <i class="fa-solid fa-leaf title-leaf-icon"></i>
+          <div class="vintage-title-wrapper">
+            <span class="vintage-frame-top"></span>
             <h1>HIDDEN GARDEN</h1>
+            <span class="vintage-subtitle">EST. 2026 • SITE PLAN</span>
+            <span class="vintage-frame-bottom"></span>
           </div>
         </div>
 
@@ -38,12 +39,12 @@
         <div class="map-toolbar-floating">
           <button id="btn-zoom-in" class="btn-tool" title="Zoom In"><i class="fa-solid fa-plus"></i></button>
           <button id="btn-zoom-out" class="btn-tool" title="Zoom Out"><i class="fa-solid fa-minus"></i></button>
-          <button id="btn-reset" class="btn-tool" title="Reset View"><i class="fa-solid fa-expand"></i></button>
+          <button id="btn-reset" class="btn-tool" title="Reset View"><i class="fa-solid fa-arrows-to-dot"></i></button>
           <div class="divider"></div>
           <button id="theme-toggle" class="btn-tool" title="Toggle Theme"><i class="fa-solid fa-circle-half-stroke"></i></button>
         </div>
 
-        <!-- Premium Floating Glassmorphic Legend on the Left -->
+        <!-- Vintage Floating Legend on the Left -->
         <div class="plan-legend-floating">
           <div class="legend-items">
             <div class="legend-item" data-target="main-house">
@@ -52,7 +53,7 @@
               </div>
               <div class="legend-text">
                 <strong>Residential (HOUSE)</strong>
-                <span>Main House • 160 m²</span>
+                <span>Main House Area • 160 m²</span>
               </div>
             </div>
             <div class="legend-item" data-target="garden">
@@ -60,8 +61,8 @@
                 <span class="legend-color garden"></span>
               </div>
               <div class="legend-text">
-                <strong>Garden / Green Space</strong>
-                <span>Landscaping • 480 m²</span>
+                <strong>Garden & Greenery</strong>
+                <span>Open Landscaping • 480 m²</span>
               </div>
             </div>
             <div class="legend-item" data-target="parking">
@@ -70,19 +71,53 @@
               </div>
               <div class="legend-text">
                 <strong>Utility (PARKING)</strong>
-                <span>Parking Area • 72 m²</span>
+                <span>Parking Space • 72 m²</span>
               </div>
             </div>
-        <!-- Floating Compass on the Right (North Indicator) -->
+          </div>
+        </div>
+
+        <!-- Floating Vintage Compass Rose (Bottom-Right, Static) -->
         <div class="map-compass-floating" title="North is Up">
-          <svg width="50" height="50" viewBox="0 0 50 50">
-            <circle cx="25" cy="25" r="20" fill="none" stroke="var(--border-color)" stroke-width="1.5" />
-            <line x1="25" y1="5" x2="25" y2="45" stroke="var(--border-color)" stroke-width="1" stroke-dasharray="2 2" />
-            <line x1="5" y1="25" x2="45" y2="25" stroke="var(--border-color)" stroke-width="1" stroke-dasharray="2 2" />
-            <!-- North Arrow pointing straight up -->
-            <polygon points="25,9 30,23 25,20 20,23" fill="var(--color-residential)" />
-            <!-- N Label at the top -->
-            <text x="25" y="8" font-family="var(--font-display)" font-size="10" font-weight="800" fill="var(--text-primary)" text-anchor="middle">N</text>
+          <svg width="60" height="60" viewBox="0 0 60 60">
+            <!-- Compass Outer Rings -->
+            <circle cx="30" cy="30" r="26" fill="none" stroke="var(--ink-color)" stroke-width="1" />
+            <circle cx="30" cy="30" r="24" fill="none" stroke="var(--ink-color)" stroke-width="0.5" stroke-dasharray="2 2" />
+            <circle cx="30" cy="30" r="2" fill="var(--ink-color)" />
+            
+            <!-- Cardinal Directions Cross -->
+            <line x1="30" y1="4" x2="30" y2="56" stroke="var(--ink-color)" stroke-width="0.5" />
+            <line x1="4" y1="30" x2="56" y2="30" stroke="var(--ink-color)" stroke-width="0.5" />
+            
+            <!-- Fleur-de-lis N indicator -->
+            <text x="30" y="9" font-family="var(--font-display)" font-size="8" font-weight="700" fill="var(--ink-color)" text-anchor="middle">N</text>
+            
+            <!-- 8-Pointed Vintage Star (Alternate Dark/Light segments) -->
+            <!-- North Point -->
+            <polygon points="30,30 30,10 27,27" fill="var(--compass-dark)" />
+            <polygon points="30,30 30,10 33,27" fill="var(--compass-light)" />
+            <!-- South Point -->
+            <polygon points="30,30 30,50 33,33" fill="var(--compass-dark)" />
+            <polygon points="30,30 30,50 27,33" fill="var(--compass-light)" />
+            <!-- East Point -->
+            <polygon points="30,30 50,30 33,27" fill="var(--compass-dark)" />
+            <polygon points="30,30 50,30 33,33" fill="var(--compass-light)" />
+            <!-- West Point -->
+            <polygon points="30,30 10,30 27,33" fill="var(--compass-dark)" />
+            <polygon points="30,30 10,30 27,27" fill="var(--compass-light)" />
+            
+            <!-- Corner Points (NE, NW, SE, SW) -->
+            <polygon points="30,30 44,16 41,20" fill="var(--compass-dark)" />
+            <polygon points="30,30 44,16 43,23" fill="var(--compass-light)" />
+            
+            <polygon points="30,30 16,16 17,23" fill="var(--compass-dark)" />
+            <polygon points="30,30 16,16 19,20" fill="var(--compass-light)" />
+            
+            <polygon points="30,30 44,44 43,37" fill="var(--compass-dark)" />
+            <polygon points="30,30 44,44 41,40" fill="var(--compass-light)" />
+            
+            <polygon points="30,30 16,44 19,40" fill="var(--compass-dark)" />
+            <polygon points="30,30 16,44 17,37" fill="var(--compass-light)" />
           </svg>
         </div>
       </div>

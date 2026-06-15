@@ -1,75 +1,54 @@
-/* Modern Premium Cyber-HUD Design System */
+/* Classic Vintage Cartographer Design System */
 :root {
   /* Fonts */
-  --font-display: 'Syne', sans-serif;
-  --font-body: 'Outfit', sans-serif;
+  --font-display: 'Cinzel', serif;
+  --font-body: 'Playfair Display', serif;
 
-  /* Dark Theme Colors (Default) */
-  --bg-primary: #030712;
-  --bg-secondary: #090d16;
-  --bg-tertiary: #0e1424;
+  /* Page Desk background (Dark Theme) */
+  --bg-primary: #15100c; /* Dark walnut wood desk */
+  --bg-secondary: #211a14; /* Dark wood secondary */
   
-  --text-primary: #f3f4f6;
-  --text-secondary: #9ca3af;
-  --text-muted: #4b5563;
+  /* Vintage Parchment Map Colors */
+  --map-bg: #f5eedc; /* Warm aged parchment */
+  --ink-color: #2c1e13; /* Dark sepia ink */
+  --ink-muted: #6e5b4c; /* Muted brown ink */
   
-  --border-color: rgba(59, 130, 246, 0.12);
-  --border-hover: rgba(59, 130, 246, 0.3);
+  /* Compass colors */
+  --compass-light: #e6ce9c;
+  --compass-dark: #4d3822;
+
+  /* Watercolor overlays for zones (Aged Ink Wash) */
+  --color-residential: #a34e36; /* Terracotta wash */
+  --color-residential-glow: rgba(163, 78, 54, 0.15);
   
-  --accent-color: #3b82f6;
-  --accent-glow: rgba(59, 130, 246, 0.4);
+  --color-garden: #5e7054; /* Antique Sage green wash */
+  --color-garden-glow: rgba(94, 112, 84, 0.15);
   
-  /* Neon Accents with Gradients */
-  --color-residential: #06b6d4;
-  --color-residential-glow: rgba(6, 182, 212, 0.4);
-  --gradient-residential: linear-gradient(135deg, #06b6d4, #3b82f6);
+  --color-utility: #3a506b; /* Indigo wash */
+  --color-utility-glow: rgba(58, 80, 107, 0.15);
   
-  --color-garden: #10b981;
-  --color-garden-glow: rgba(16, 185, 129, 0.4);
-  --gradient-garden: linear-gradient(135deg, #10b981, #34d399);
+  /* Floating elements (Vintage labels/tabs) */
+  --card-bg: rgba(247, 243, 235, 0.92);
+  --card-border: #3c2c1e;
+  --text-primary: #2c1e13;
+  --text-secondary: #5a4b3f;
   
-  --color-utility: #8b5cf6;
-  --color-utility-glow: rgba(139, 92, 246, 0.4);
-  --gradient-utility: linear-gradient(135deg, #8b5cf6, #6366f1);
-  
-  /* Glassmorphic settings */
-  --glass-bg: rgba(9, 13, 22, 0.65);
-  --glass-blur: blur(16px);
-  --glass-border: rgba(255, 255, 255, 0.04);
-  
-  --shadow-lg: 0 12px 30px -10px rgba(0, 0, 0, 0.6), 0 0 15px rgba(59, 130, 246, 0.05);
-  --border-radius: 16px;
-  --transition-speed: 0.4s;
+  --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.45);
+  --border-radius: 4px; /* More square/blocky like hand-cut tags */
+  --transition-speed: 0.3s;
 }
 
-/* Light Theme overrides (Clean minimalistic futuristic light mode) */
+/* Light Theme overrides (Parchment/Linen desk) */
 body.light-theme {
-  --bg-primary: #f0f2f5;
-  --bg-secondary: #ffffff;
-  --bg-tertiary: #e4e7eb;
+  --bg-primary: #e6dfd3; /* Warm linen/linen desk background */
+  --bg-secondary: #ded6c8;
   
-  --text-primary: #0f172a;
-  --text-secondary: #475569;
-  --text-muted: #94a3b8;
-  
-  --border-color: rgba(37, 99, 235, 0.1);
-  --border-hover: rgba(37, 99, 235, 0.25);
-  
-  --accent-color: #2563eb;
-  --accent-glow: rgba(37, 99, 235, 0.2);
-  
-  --color-residential: #0891b2;
-  --color-residential-glow: rgba(8, 145, 178, 0.2);
-  
-  --color-garden: #059669;
-  --color-garden-glow: rgba(5, 150, 105, 0.2);
-  
-  --color-utility: #7c3aed;
-  --color-utility-glow: rgba(124, 58, 237, 0.2);
-  
-  --glass-bg: rgba(255, 255, 255, 0.75);
-  --glass-border: rgba(0, 0, 0, 0.04);
-  --shadow-lg: 0 12px 30px -10px rgba(0, 0, 0, 0.05), 0 0 15px rgba(37, 99, 235, 0.02);
+  /* Floating elements (Slightly lighter tags) */
+  --card-bg: rgba(253, 251, 247, 0.95);
+  --card-border: #423020;
+  --text-primary: #2c1e13;
+  --text-secondary: #5a4b3f;
+  --shadow-lg: 0 10px 25px rgba(44, 30, 19, 0.15);
 }
 
 /* Reset and Core Styles */
@@ -86,8 +65,7 @@ body {
   height: 100vh;
   width: 100vw;
   overflow: hidden;
-  transition: background-color var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1), 
-              color var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1);
+  transition: background-color var(--transition-speed) ease;
 }
 
 .app-container {
@@ -109,10 +87,9 @@ body {
   position: absolute;
   top: 0;
   left: 0;
-  background-color: var(--bg-primary); /* Follows theme (dark or light) */
+  background-color: var(--bg-primary); /* Desk color */
   overflow: hidden;
   cursor: grab;
-  transition: background-color var(--transition-speed) ease;
 }
 
 .canvas-container:active {
@@ -124,11 +101,19 @@ body {
   height: 100%;
   display: block;
   user-select: none;
+  /* Make the entire canvas render in sepia blend */
+  background-color: var(--map-bg);
+  /* Apply paper border vignette to the canvas */
+  box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.25);
 }
 
+/* Plan boundary line (fence) */
+.plot-boundary {
+  stroke: var(--ink-color);
+  stroke-width: 2.5px;
+}
 
-
-/* Premium Floating HUD Title (Top-Left) */
+/* Elegant Calligraphic Title (Top-Left) */
 .map-title-floating {
   position: absolute;
   top: 24px;
@@ -137,50 +122,49 @@ body {
   pointer-events: none;
 }
 
-.hud-title-wrapper {
-  position: relative;
-  background: var(--glass-bg);
-  backdrop-filter: var(--glass-blur);
-  border: 1px solid var(--glass-border);
-  padding: 12px 24px 12px 42px;
+.vintage-title-wrapper {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  padding: 14px 28px;
   border-radius: var(--border-radius);
   box-shadow: var(--shadow-lg);
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 12px;
-  overflow: hidden;
+  gap: 4px;
+  text-align: center;
 }
 
-/* Sci-fi scanner bar effect */
-.hud-scanner-line {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 4px;
-  height: 100%;
-  background: var(--gradient-residential);
-  box-shadow: 0 0 10px var(--color-residential);
-}
-
-.title-leaf-icon {
-  position: absolute;
-  left: 16px;
-  font-size: 16px;
-  color: var(--color-garden);
-  filter: drop-shadow(0 0 5px var(--color-garden));
-  animation: leafPulse 3s ease-in-out infinite;
-}
-
-.map-title-floating h1 {
+.vintage-title-wrapper h1 {
   font-family: var(--font-display);
-  font-size: 16px;
-  font-weight: 800;
+  font-size: 18px;
+  font-weight: 700;
   letter-spacing: 3px;
-  background: linear-gradient(90deg, var(--text-primary), var(--text-secondary));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: var(--text-primary);
   margin: 0;
 }
+
+.vintage-subtitle {
+  font-family: var(--font-display);
+  font-size: 8px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  color: var(--text-secondary);
+  border-top: 1px solid var(--ink-muted);
+  padding-top: 4px;
+  width: 100%;
+}
+
+.vintage-frame-top, .vintage-frame-bottom {
+  display: block;
+  width: 30px;
+  height: 2px;
+  border-top: 1px solid var(--card-border);
+  border-bottom: 1px solid var(--card-border);
+}
+
+.vintage-frame-top { margin-bottom: 4px; }
+.vintage-frame-bottom { margin-top: 4px; }
 
 /* Floating Toolbar (Top-Right) */
 .map-toolbar-floating {
@@ -190,123 +174,83 @@ body {
   z-index: 10;
   display: flex;
   align-items: center;
-  gap: 6px;
-  background: var(--glass-bg);
-  backdrop-filter: var(--glass-blur);
-  padding: 6px;
+  gap: 4px;
+  background: var(--card-bg);
+  padding: 4px;
   border-radius: var(--border-radius);
-  border: 1px solid var(--glass-border);
+  border: 1px solid var(--card-border);
   box-shadow: var(--shadow-lg);
-  transition: all var(--transition-speed) ease;
 }
 
 .btn-tool {
   background: transparent;
   border: none;
   color: var(--text-secondary);
-  width: 38px;
-  height: 38px;
-  border-radius: 10px;
+  width: 34px;
+  height: 34px;
+  border-radius: var(--border-radius);
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 14px;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  font-size: 13px;
+  transition: all 0.2s ease;
 }
 
 .btn-tool:hover {
-  background: var(--border-color);
+  background: rgba(0, 0, 0, 0.05);
   color: var(--text-primary);
-  transform: scale(1.05);
-}
-
-.btn-tool:active {
-  transform: scale(0.95);
 }
 
 .map-toolbar-floating .divider {
   width: 1px;
-  height: 24px;
-  background: var(--border-color);
+  height: 20px;
+  background: var(--ink-muted);
   margin: 0 4px;
+  opacity: 0.3;
 }
 
-/* Floating HUD Legend (Bottom-Left) */
+/* Floating Vintage Legend (Bottom-Left) */
 .plan-legend-floating {
   position: absolute;
   bottom: 24px;
   left: 24px;
   z-index: 10;
-  background: var(--glass-bg);
-  backdrop-filter: var(--glass-blur);
-  border: 1px solid var(--glass-border);
-  padding: 20px;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  padding: 16px;
   border-radius: var(--border-radius);
   box-shadow: var(--shadow-lg);
-  width: 290px;
+  width: 270px;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 12px;
   pointer-events: auto;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-.plan-legend-floating:hover {
-  border-color: var(--border-hover);
-  box-shadow: 0 15px 35px -10px rgba(0, 0, 0, 0.7), 0 0 20px rgba(59, 130, 246, 0.1);
-}
-
-.legend-header {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  border-bottom: 1px solid var(--border-color);
-  padding-bottom: 10px;
-}
-
-.legend-hud-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--color-residential);
-  box-shadow: 0 0 8px var(--color-residential);
-  animation: hudPulse 2s infinite;
-}
-
-.legend-header h3 {
-  font-family: var(--font-display);
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 1.5px;
-  color: var(--text-secondary);
 }
 
 .legend-items {
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 10px;
 }
 
 .legend-item {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 12px;
   cursor: pointer;
-  padding: 6px;
-  border-radius: 8px;
-  transition: background-color 0.2s ease, transform 0.2s ease;
+  padding: 4px;
+  border-radius: var(--border-radius);
+  transition: background-color 0.2s ease;
 }
 
 .legend-item:hover {
-  background: rgba(255, 255, 255, 0.02);
-  transform: translateX(4px);
+  background: rgba(0, 0, 0, 0.03);
 }
 
 .legend-color-wrapper {
-  position: relative;
-  width: 16px;
-  height: 16px;
+  width: 14px;
+  height: 14px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -314,106 +258,71 @@ body {
 }
 
 .legend-color {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  z-index: 2;
-  box-shadow: 0 0 6px rgba(0,0,0,0.3);
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  border: 1px solid var(--card-border);
 }
 
-/* Theme color mappings */
-.legend-color.residential { background: var(--gradient-residential); }
-.legend-color.garden { background: var(--gradient-garden); }
-.legend-color.utility { background: var(--gradient-utility); }
+/* Antique watercolor zone colors */
+.legend-color.residential { background-color: var(--color-residential); }
+.legend-color.garden { background-color: var(--color-garden); }
+.legend-color.utility { background-color: var(--color-utility); }
 
 .legend-text {
   display: flex;
   flex-direction: column;
-  gap: 2px;
 }
 
 .legend-text strong {
-  font-size: 12px;
-  font-weight: 600;
+  font-family: var(--font-display);
+  font-size: 11px;
+  font-weight: 700;
   color: var(--text-primary);
-  transition: color 0.2s ease;
-}
-
-.legend-item:hover .legend-text strong {
-  color: var(--accent-color);
 }
 
 .legend-text span {
   font-size: 10px;
   color: var(--text-secondary);
+  font-style: italic;
 }
 
-/* SVG Cyber-Interactive Styling */
-.plot-polygon {
-  cursor: pointer;
-  fill-opacity: 0.12;
-  transition: fill-opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1), 
-              stroke-width 0.3s cubic-bezier(0.4, 0, 0.2, 1), 
-              stroke 0.3s ease, 
-              filter 0.3s ease;
-}
-
-.plot-polygon:hover {
-  fill-opacity: 0.32;
-  stroke-width: 3.5px;
-  filter: drop-shadow(0px 0px 10px var(--hover-glow));
-}
-
-.plot-polygon.active {
-  fill-opacity: 0.45 !important;
-  stroke-width: 4px !important;
-  stroke-dasharray: none !important;
-  filter: drop-shadow(0px 0px 15px var(--hover-glow)) !important;
-}
-
-/* Animations */
-@keyframes leafPulse {
-  0% { transform: scale(1); filter: drop-shadow(0 0 3px var(--color-garden)); }
-  50% { transform: scale(1.15); filter: drop-shadow(0 0 8px var(--color-garden)); }
-  100% { transform: scale(1); filter: drop-shadow(0 0 3px var(--color-garden)); }
-}
-
-
-
-/* Floating Compass (Bottom-Right) */
+/* Floating Vintage Compass Rose (Bottom-Right, Static Overlay) */
 .map-compass-floating {
   position: absolute;
   bottom: 24px;
   right: 24px;
   z-index: 10;
-  background: var(--glass-bg);
-  backdrop-filter: var(--glass-blur);
-  border: 1px solid var(--glass-border);
-  padding: 10px;
+  pointer-events: none; /* Purely static visual ornament */
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  padding: 8px;
   border-radius: var(--border-radius);
   box-shadow: var(--shadow-lg);
   display: flex;
   align-items: center;
   justify-content: center;
-  pointer-events: auto; /* Interactive card component */
-  cursor: help;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.map-compass-floating:hover {
-  border-color: var(--border-hover);
-  box-shadow: 0 15px 35px -10px rgba(0, 0, 0, 0.7), 0 0 20px rgba(59, 130, 246, 0.1);
-  transform: translateY(-2px);
+/* SVG Ink & Wash Polygon Styling */
+.plot-polygon {
+  cursor: pointer;
+  fill-opacity: 0.25; /* Ink wash opacity */
+  stroke-width: 1.5px;
+  stroke-dasharray: 3 3; /* Classic dashed boundary representation */
+  transition: fill-opacity 0.3s ease, stroke-width 0.2s ease, stroke-dasharray 0.2s ease;
 }
 
-.map-compass-floating svg polygon {
-  filter: drop-shadow(0 0 3px var(--color-residential));
-  transform-origin: 25px 16px;
-  transition: transform 0.3s ease;
+.plot-polygon:hover {
+  fill-opacity: 0.45;
+  stroke-width: 2.5px;
+  stroke-dasharray: none; /* Becomes solid boundary on focus */
 }
 
-.map-compass-floating:hover svg polygon {
-  transform: scale(1.15);
+.plot-polygon.active {
+  fill-opacity: 0.55 !important;
+  stroke-width: 3px !important;
+  stroke-dasharray: none !important;
 }
 
 /* Responsive adjustments */
@@ -422,15 +331,5 @@ body {
     width: calc(100% - 48px);
     bottom: 24px;
     left: 24px;
-  }
-  
-  .map-title-floating {
-    top: 16px;
-    left: 16px;
-  }
-  
-  .map-toolbar-floating {
-    top: 16px;
-    right: 16px;
   }
 }

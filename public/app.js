@@ -27,10 +27,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Draw digital plot boundary fence/border
   const boundary = s.polygon([150, 200, 690, 200, 690, 1100, 150, 1100]).attr({
-    fill: 'none',
-    stroke: 'var(--border-color)',
-    strokeWidth: 3
-  });
+    fill: 'none'
+  }).addClass('plot-boundary');
   
   // Define objects and their coordinates based on user sketch
   const objectsData = {
