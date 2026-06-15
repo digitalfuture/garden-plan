@@ -109,10 +109,10 @@ body {
   position: absolute;
   top: 0;
   left: 0;
-  background-color: #ebdcb9; /* Warm parchment base */
-  background-image: radial-gradient(circle, #f7f3e8 20%, #d8c295 100%); /* Paper lighting vignette */
+  background-color: var(--bg-primary); /* Follows theme (dark or light) */
   overflow: hidden;
   cursor: grab;
+  transition: background-color var(--transition-speed) ease;
 }
 
 .canvas-container:active {
@@ -124,6 +124,12 @@ body {
   height: 100%;
   display: block;
   user-select: none;
+}
+
+/* Floating Paper Sheet Style */
+.paper-sheet {
+  fill: #f5eedc; /* Realistic warm cream paper */
+  filter: drop-shadow(0 15px 35px rgba(0, 0, 0, 0.45)); /* Shadows the paper to float */
 }
 
 /* Blend the plan image with the paper background */

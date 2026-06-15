@@ -25,6 +25,9 @@ document.addEventListener('DOMContentLoaded', () => {
     viewBox: `${viewBox.x} ${viewBox.y} ${viewBox.w} ${viewBox.h}`
   });
 
+  // Draw paper sheet background
+  const paperSheet = s.rect(0, 0, imgWidth, imgHeight).addClass('paper-sheet');
+
   // Load Base Image
   const baseImg = s.image('assets/base_plan.jpg', 0, 0, imgWidth, imgHeight);
   
