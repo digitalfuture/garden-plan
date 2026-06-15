@@ -40,12 +40,12 @@ document.addEventListener('DOMContentLoaded', () => {
     'main-house': {
       title: 'Main House (HOUSE)',
       category: 'residential',
-      points: [330, 200, 420, 200, 420, 300, 690, 300, 690, 500, 330, 500]
+      points: [330, 200, 420, 200, 420, 300, 690, 300, 690, 500, 420, 500, 420, 410, 330, 410]
     },
     'garden': {
       title: 'Free Territory / Garden',
       category: 'garden',
-      points: [150, 200, 330, 200, 330, 500, 690, 500, 690, 1100, 150, 1100]
+      points: [150, 200, 330, 200, 330, 410, 420, 410, 420, 500, 690, 500, 690, 1100, 150, 1100]
     }
   };
 
