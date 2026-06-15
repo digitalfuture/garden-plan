@@ -475,9 +475,9 @@ document.addEventListener('DOMContentLoaded', () => {
     if (plant.level === 4) {
       const g = s.group().addClass('plant-marker tree-marker').attr({ id: `marker-${key}` });
       drawTreeSymbol(g, plant.x, plant.y, 18, plant.color, plant.id, plant.style);
-      g.mouseover((e) => showTooltip(e, plant));
-      g.mousemove((e) => positionTooltip(e));
-      g.mouseout(() => hideTooltip());
+      g.node.addEventListener('mouseenter', (e) => showTooltip(e, plant));
+      g.node.addEventListener('mousemove', (e) => positionTooltip(e));
+      g.node.addEventListener('mouseleave', () => hideTooltip());
       group.add(g);
     } else if (plant.level === 3) {
       const g = s.group().addClass('plant-marker shrub-marker').attr({ id: `marker-${key}` });
@@ -488,9 +488,9 @@ document.addEventListener('DOMContentLoaded', () => {
       g.add(s.text(plant.x, plant.y + 1.8, plant.id).attr({
         fontFamily: 'var(--font-display)', fontSize: '5.5px', fontWeight: '600', textAnchor: 'middle', fill: 'var(--ink-color)'
       }));
-      g.mouseover((e) => showTooltip(e, plant));
-      g.mousemove((e) => positionTooltip(e));
-      g.mouseout(() => hideTooltip());
+      g.node.addEventListener('mouseenter', (e) => showTooltip(e, plant));
+      g.node.addEventListener('mousemove', (e) => positionTooltip(e));
+      g.node.addEventListener('mouseleave', () => hideTooltip());
       group.add(g);
     } else if (plant.level === 2) {
       const g = s.group().addClass('plant-marker flower-marker').attr({ id: `marker-${key}` });
@@ -501,9 +501,9 @@ document.addEventListener('DOMContentLoaded', () => {
       g.add(s.text(plant.x, plant.y + 2, plant.id).attr({
         fontFamily: 'var(--font-display)', fontSize: '5.5px', fontWeight: '700', textAnchor: 'middle', fill: 'var(--ink-color)'
       }));
-      g.mouseover((e) => showTooltip(e, plant));
-      g.mousemove((e) => positionTooltip(e));
-      g.mouseout(() => hideTooltip());
+      g.node.addEventListener('mouseenter', (e) => showTooltip(e, plant));
+      g.node.addEventListener('mousemove', (e) => positionTooltip(e));
+      g.node.addEventListener('mouseleave', () => hideTooltip());
       group.add(g);
     }
   });
@@ -522,9 +522,9 @@ document.addEventListener('DOMContentLoaded', () => {
     id: 'Л-Запад', name: 'West Fence Vines', botName: 'Passiflora & Vitis vinifera',
     desc: 'Markisa Madu (sweet honey passionfruit) and seedless grapes (Isabella, Jupiter, Ninel) climbing the western fence.'
   };
-  westVine.mouseover((e) => showTooltip(e, westVineData));
-  westVine.mousemove((e) => positionTooltip(e));
-  westVine.mouseout(() => hideTooltip());
+  westVine.node.addEventListener('mouseenter', (e) => showTooltip(e, westVineData));
+  westVine.node.addEventListener('mousemove', (e) => positionTooltip(e));
+  westVine.node.addEventListener('mouseleave', () => hideTooltip());
   
   for (let y = 210; y <= 1090; y += 20) {
     const leaf = s.circle(150 + Math.sin(y / 15) * 5 + (y % 40 === 0 ? 3 : -3), y, 3).attr({
@@ -547,9 +547,9 @@ document.addEventListener('DOMContentLoaded', () => {
     id: 'Л-Восток', name: 'East Dragonfruit', botName: 'Selenicereus undatus',
     desc: 'Three varieties of pitahaya (White, Red, and sweet Yellow) growing on supports along the eastern fence.'
   };
-  eastVine.mouseover((e) => showTooltip(e, eastVineData));
-  eastVine.mousemove((e) => positionTooltip(e));
-  eastVine.mouseout(() => hideTooltip());
+  eastVine.node.addEventListener('mouseenter', (e) => showTooltip(e, eastVineData));
+  eastVine.node.addEventListener('mousemove', (e) => positionTooltip(e));
+  eastVine.node.addEventListener('mouseleave', () => hideTooltip());
   
   for (let y = 515; y <= 1085; y += 24) {
     const leaf = s.circle(690 - Math.sin(y / 12) * 4 + (y % 48 === 0 ? -3 : 3), y, 3.5).attr({
@@ -572,9 +572,9 @@ document.addEventListener('DOMContentLoaded', () => {
     id: 'Я1-В', name: 'Wild Mint (Mentha)', botName: 'Mentha arvensis / javanica',
     desc: 'Planted in the cool semi-shade of the house cutout. Repels pests, smells pleasant, and attracts butterflies.'
   };
-  mintGroup.mouseover((e) => showTooltip(e, mintData));
-  mintGroup.mousemove((e) => positionTooltip(e));
-  mintGroup.mouseout(() => hideTooltip());
+  mintGroup.node.addEventListener('mouseenter', (e) => showTooltip(e, mintData));
+  mintGroup.node.addEventListener('mousemove', (e) => positionTooltip(e));
+  mintGroup.node.addEventListener('mouseleave', () => hideTooltip());
 
   const groundcoverPositions = [
     { x: 200, y: 350, type: 'lippia', name: 'Phyla nodiflora (Lippia)', id: 'Я1-Б', desc: 'Groundcover substitute for lawn, handles light traffic. White-pink flowers attract butterflies.', color: '#f28482' },
@@ -593,9 +593,9 @@ document.addEventListener('DOMContentLoaded', () => {
     gcGroup.add(s.circle(gc.x - 6, gc.y - 8, 1.5).attr({ fill: gc.color }));
     gcGroup.add(s.circle(gc.x + 6, gc.y - 8, 1.5).attr({ fill: gc.color }));
     
-    gcGroup.mouseover((e) => showTooltip(e, gc));
-    gcGroup.mousemove((e) => positionTooltip(e));
-    gcGroup.mouseout(() => hideTooltip());
+    gcGroup.node.addEventListener('mouseenter', (e) => showTooltip(e, gc));
+    gcGroup.node.addEventListener('mousemove', (e) => positionTooltip(e));
+    gcGroup.node.addEventListener('mouseleave', () => hideTooltip());
     plantGroups[1].add(gcGroup);
   });
 
